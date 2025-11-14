@@ -1,0 +1,227 @@
+-------------------------------------------------------------
+|        COMPILADOR - PROYECTO 2                             |
+|       Analizador Léxico + Sintáctico                      |
+-------------------------------------------------------------
+
+Archivo de entrada: archivo_entrada.txt
+
+=== FASE 1: ANALISIS LEXICO ===
+
+Token: (0, 0) → Átomo: alternative
+Token: (0, 1) → Átomo: big
+Token: (0, 2) → Átomo: evaluate
+Token: (0, 3) → Átomo: instead
+Token: (0, 4) → Átomo: large
+Token: (0, 5) → Átomo: loop
+Token: (0, 6) → Átomo: make
+Token: (0, 7) → Átomo: number
+Token: (0, 8) → Átomo: other
+Token: (0, 9) → Átomo: real
+Token: (0, 10) → Átomo: repeat
+Token: (0, 11) → Átomo: select
+Token: (0, 12) → Átomo: small
+Token: (0, 13) → Átomo: step
+Token: (0, 14) → Átomo: stop
+Token: (0, 15) → Átomo: symbol
+Token: (0, 16) → Átomo: throw
+Token: (1, 0) → Átomo: id
+Token: (1, 1) → Átomo: id
+Token: (1, 2) → Átomo: id
+Token: (1, 3) → Átomo: id
+Token: (1, 4) → Átomo: id
+Token: (2, 0) → Átomo: num
+Token: (2, 1) → Átomo: num
+Token: (2, 2) → Átomo: num
+Token: (2, 3) → Átomo: num
+Token: (2, 4) → Átomo: num
+Token: (2, 5) → Átomo: num
+Token: (1, 4) → Átomo: id
+Token: (2, 6) → Átomo: num
+Token: (3, 7) → Átomo: num
+Token: (3, 8) → Átomo: num
+Token: (3, 9) → Átomo: num
+Error Léxico: Símbolo no reconocido '.'
+Token: (2, 10) → Átomo: num
+Token: (2, 11) → Átomo: num
+Error Léxico: Símbolo no reconocido '.'
+Token: (1, 4) → Átomo: id
+Token: (2, 11) → Átomo: num
+Token: (4, 0) → Átomo: lit
+Token: (4, 1) → Átomo: lit
+Token: (4, 2) → Átomo: lit
+Token: (4, 3) → Átomo: lit
+Token: (4, 4) → Átomo: lit
+Token: (4, 5) → Átomo: lit
+Error Léxico: Símbolo no reconocido 'v'
+Error Léxico: Símbolo no reconocido 'a'
+Error Léxico: Símbolo no reconocido 'l'
+Error Léxico: Símbolo no reconocido 'i'
+Error Léxico: Símbolo no reconocido 'd'
+Error Léxico: Símbolo no reconocido 'o'
+Error Léxico: Símbolo no reconocido 's'
+Token: (4, 6) → Átomo: lit
+Token: (4, 6) → Átomo: lit
+Error Léxico: Símbolo no reconocido '"'
+Token: (4, 6) → Átomo: lit
+Error Léxico: Símbolo no reconocido 'h'
+Error Léxico: Símbolo no reconocido 'o'
+Error Léxico: Símbolo no reconocido 'l'
+Error Léxico: Símbolo no reconocido 'a'
+Error Léxico: Símbolo no reconocido '''
+Error Léxico: Símbolo no reconocido 'm'
+Error Léxico: Símbolo no reconocido 'u'
+Error Léxico: Símbolo no reconocido 'n'
+Error Léxico: Símbolo no reconocido 'd'
+Error Léxico: Símbolo no reconocido 'o'
+Error Léxico: Símbolo no reconocido '"'
+Token: (5, 0) → Átomo: [
+Token: (5, 1) → Átomo: ]
+Token: (5, 4) → Átomo: {
+Token: (5, 5) → Átomo: }
+Token: (5, 2) → Átomo: (
+Token: (5, 3) → Átomo: )
+Token: (5, 6) → Átomo: ,
+Token: (5, 7) → Átomo: :
+Token: (5, 8) → Átomo: ;
+Token: (1, 5) → Átomo: id
+Token: (6, 1) → Átomo: +
+Token: (6, 5) → Átomo: -
+Token: (6, 3) → Átomo: *
+Token: (6, 2) → Átomo: /
+Token: (6, 4) → Átomo: %
+Token: (6, 7) → Átomo: \
+Token: (6, 6) → Átomo: ^
+Token: (1, 6) → Átomo: id
+Token: (7, 0) → Átomo: <
+Token: (7, 1) → Átomo: >
+Token: (7, 2) → Átomo: <=
+Token: (7, 3) → Átomo: >=
+Token: (7, 4) → Átomo: ==
+Token: (7, 5) → Átomo: !=
+Token: (1, 7) → Átomo: id
+Token: (8, 0) → Átomo: =
+
+=== FASE 2: ANALISIS SINTACTICO ===
+
+(Esperando implementación de analizadores sintácticos)
+
+=== FASE 3: REPORTE FINAL ===
+
+-------------------------------------------------------------
+|          REPORTE COMPLETO DEL ANALISIS                     |
+--------------------------------------------------------------
+
+--- CADENA DE ATOMOS ---
+alternative big evaluate instead large loop make number other real repeat select small step stop symbol throw id id id id id num num num num num num id num num num num num num id num lit lit lit lit lit lit lit lit lit [ ] { } ( ) , : ; id + - * / % \ ^ id < > <= >= == != id =
+
+--- TOKENS GENERADOS ---
+Pos: 0, Dato: (Token sin dato), Tipo: 0
+Pos: 1, Dato: (Token sin dato), Tipo: 0
+Pos: 2, Dato: (Token sin dato), Tipo: 0
+Pos: 3, Dato: (Token sin dato), Tipo: 0
+Pos: 4, Dato: (Token sin dato), Tipo: 0
+Pos: 5, Dato: (Token sin dato), Tipo: 0
+Pos: 6, Dato: (Token sin dato), Tipo: 0
+Pos: 7, Dato: (Token sin dato), Tipo: 0
+Pos: 8, Dato: (Token sin dato), Tipo: 0
+Pos: 9, Dato: (Token sin dato), Tipo: 0
+Pos: 10, Dato: (Token sin dato), Tipo: 0
+Pos: 11, Dato: (Token sin dato), Tipo: 0
+Pos: 12, Dato: (Token sin dato), Tipo: 0
+Pos: 13, Dato: (Token sin dato), Tipo: 0
+Pos: 14, Dato: (Token sin dato), Tipo: 0
+Pos: 15, Dato: (Token sin dato), Tipo: 0
+Pos: 16, Dato: (Token sin dato), Tipo: 0
+Pos: 0, Dato: (Token sin dato), Tipo: 1
+Pos: 1, Dato: (Token sin dato), Tipo: 1
+Pos: 2, Dato: (Token sin dato), Tipo: 1
+Pos: 3, Dato: (Token sin dato), Tipo: 1
+Pos: 4, Dato: (Token sin dato), Tipo: 1
+Pos: 0, Dato: (Token sin dato), Tipo: 2
+Pos: 1, Dato: (Token sin dato), Tipo: 2
+Pos: 2, Dato: (Token sin dato), Tipo: 2
+Pos: 3, Dato: (Token sin dato), Tipo: 2
+Pos: 4, Dato: (Token sin dato), Tipo: 2
+Pos: 5, Dato: (Token sin dato), Tipo: 2
+Pos: 4, Dato: (Token sin dato), Tipo: 1
+Pos: 6, Dato: (Token sin dato), Tipo: 2
+Pos: 7, Dato: (Token sin dato), Tipo: 3
+Pos: 8, Dato: (Token sin dato), Tipo: 3
+Pos: 9, Dato: (Token sin dato), Tipo: 3
+Pos: 10, Dato: (Token sin dato), Tipo: 2
+Pos: 11, Dato: (Token sin dato), Tipo: 2
+Pos: 4, Dato: (Token sin dato), Tipo: 1
+Pos: 11, Dato: (Token sin dato), Tipo: 2
+Pos: 0, Dato: (Token sin dato), Tipo: 4
+Pos: 1, Dato: (Token sin dato), Tipo: 4
+Pos: 2, Dato: (Token sin dato), Tipo: 4
+Pos: 3, Dato: (Token sin dato), Tipo: 4
+Pos: 4, Dato: (Token sin dato), Tipo: 4
+Pos: 5, Dato: (Token sin dato), Tipo: 4
+Pos: 6, Dato: (Token sin dato), Tipo: 4
+Pos: 6, Dato: (Token sin dato), Tipo: 4
+Pos: 6, Dato: (Token sin dato), Tipo: 4
+Pos: 0, Dato: (Token sin dato), Tipo: 5
+Pos: 1, Dato: (Token sin dato), Tipo: 5
+Pos: 4, Dato: (Token sin dato), Tipo: 5
+Pos: 5, Dato: (Token sin dato), Tipo: 5
+Pos: 2, Dato: (Token sin dato), Tipo: 5
+Pos: 3, Dato: (Token sin dato), Tipo: 5
+Pos: 6, Dato: (Token sin dato), Tipo: 5
+Pos: 7, Dato: (Token sin dato), Tipo: 5
+Pos: 8, Dato: (Token sin dato), Tipo: 5
+Pos: 5, Dato: (Token sin dato), Tipo: 1
+Pos: 1, Dato: (Token sin dato), Tipo: 6
+Pos: 5, Dato: (Token sin dato), Tipo: 6
+Pos: 3, Dato: (Token sin dato), Tipo: 6
+Pos: 2, Dato: (Token sin dato), Tipo: 6
+Pos: 4, Dato: (Token sin dato), Tipo: 6
+Pos: 7, Dato: (Token sin dato), Tipo: 6
+Pos: 6, Dato: (Token sin dato), Tipo: 6
+Pos: 6, Dato: (Token sin dato), Tipo: 1
+Pos: 0, Dato: (Token sin dato), Tipo: 7
+Pos: 1, Dato: (Token sin dato), Tipo: 7
+Pos: 2, Dato: (Token sin dato), Tipo: 7
+Pos: 3, Dato: (Token sin dato), Tipo: 7
+Pos: 4, Dato: (Token sin dato), Tipo: 7
+Pos: 5, Dato: (Token sin dato), Tipo: 7
+Pos: 7, Dato: (Token sin dato), Tipo: 1
+Pos: 0, Dato: (Token sin dato), Tipo: 8
+
+--- TABLA DE SÍMBOLOS ---
+Pos: 0, Dato: $clase_uno, Tipo: -1
+Pos: 1, Dato: $identificadores, Tipo: -1
+Pos: 2, Dato: $Alonso, Tipo: -1
+Pos: 3, Dato: $Grupo_Compiladores, Tipo: -1
+Pos: 4, Dato: $clase_, Tipo: -1
+Pos: 5, Dato: $operadores_aritmeticos, Tipo: -1
+Pos: 6, Dato: $operadores_relacionales, Tipo: -1
+Pos: 7, Dato: $operador_de_asignacion, Tipo: -1
+
+--- TABLA DE LITERALES NUMERICAS ---
+Pos: 0, Dato: 2, Tipo: 0
+Pos: 1, Dato: o1234567, Tipo: 0
+Pos: 2, Dato: O2136, Tipo: 0
+Pos: 3, Dato: 3432, Tipo: 0
+Pos: 4, Dato: 0, Tipo: 0
+Pos: 5, Dato: 432442, Tipo: 0
+Pos: 6, Dato: 3, Tipo: 0
+Pos: 7, Dato: 73.0, Tipo: 0
+Pos: 8, Dato: .0, Tipo: 0
+Pos: 9, Dato: 10.2, Tipo: 0
+Pos: 10, Dato: 12, Tipo: 0
+Pos: 11, Dato: 4, Tipo: 0
+
+--- TABLA DE LITERALES CADENAS ---
+Pos: 0, Dato: Hola mundo, Tipo: 0
+Pos: 1, Dato: a, Tipo: 0
+Pos: 2, Dato: b, Tipo: 0
+Pos: 3, Dato: ', Tipo: 0
+Pos: 4, Dato: ", Tipo: 0
+Pos: 5, Dato: ejemplos no , Tipo: 0
+Pos: 6, Dato: 
+, Tipo: 0
+
+---------------------------------------------------------------
+|  ✓ PROGRAMA SINTÁCTICAMENTE CORRECTO                      |
+----------------------------------------------------------------

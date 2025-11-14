@@ -1,0 +1,54 @@
+alternative
+big 
+evaluate
+instead
+large
+loop
+make
+number
+other
+real
+repeat
+select
+small
+step
+stop
+symbol
+throw
+
+$clase_uno
+$identificadores
+$Alonso
+$Grupo_Compiladores
+
+$clase_2
+
+o1234567 O2136 3432
+0432442
+
+$clase_3
+73.0     .0  10.2  
+.    12      4.
+$clase_4
+"Hola mundo"
+'a' 'b'
+"'"
+'"'
+"ejemplos no "validos"
+""
+"""
+"hola' mundo"
+
+[ ]
+{ }
+( ) 
+, :  ;
+
+$operadores_aritmeticos
++ - * / % \  ^
+
+$operadores_relacionales
+< > <= >= == !=
+
+$operador_de_asignacion
+=
