@@ -286,12 +286,12 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
 #define YY_END_OF_BUFFER 49
 static yyconst short int yy_accept[136] =
     {   0,
-        0,    0,   49,   47,    1,    1,   47,   47,   47,   36,
-       47,   26,   27,   35,   33,   30,   37,   47,   34,   20,
-       20,   31,   32,   44,   46,   45,   47,   24,   39,   25,
-       38,   47,   47,   47,   47,   47,   47,   47,   47,   47,
-       47,   47,   28,   29,    1,   43,    0,    0,   19,    0,
-        0,   22,    0,    0,   20,   40,   42,   41,   21,    0,
+        0,    0,   49,   47,    1,    1,   47,   47,   47,   37,
+       47,   26,   27,   35,   33,   30,   34,   47,   36,   20,
+       20,   31,   32,   40,   46,   41,   47,   24,   38,   25,
+       39,   47,   47,   47,   47,   47,   47,   47,   47,   47,
+       47,   47,   28,   29,    1,   45,    0,    0,   19,    0,
+        0,   22,    0,    0,   20,   42,   44,   43,   21,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
         0,    0,    0,    0,   23,    0,    3,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
@@ -464,7 +464,7 @@ char *yytext;
     - Persona 2: Emilia Macarena Arriaga Rodríguez - Analizador Predictivo
     - Persona 3: Marco Gael Ventura Picazo - Analizador Recursivo
     
-    Fecha: [10/11/2025]
+    Fecha: 10/11/2025
     */
    #include <stdio.h>
    #include <stdlib.h>
@@ -473,42 +473,52 @@ char *yytext;
   
    // ==================== TABLAS DEL ANALIZADOR LÉXICO ====================
    ListaC * TS_inicio = NULL;      // Tabla de Símbolos
-   ListaC * TLN_inicio = NULL;     // Tabla de Literales Numéricas
+   ListaC * TLN_inicio = NULL;     // Tabla de Literales Numéricas (Clase 2)
+   ListaC * TLR_inicio = NULL;     // Tabla de Literales Reales (Clase 3) - NUEVA
    ListaC * TLC_inicio = NULL;     // Tabla de Literales Cadenas
    ListaC * ListaT_inicio = NULL;  // Lista de TOKENS
 
    // Contadores de posición
    int pos_ts = 0;
    int pos_tln = 0;
+   int pos_tlr = 0;  // NUEVO: Para reales
    int pos_tlc = 0;
-   int pos_token = 0; //contador para asignar posición del Token
+   int pos_token = 0;
 
    // ==================== NUEVA: CADENA DE ÁTOMOS ====================
-   // Tabla de mapeo: Clase de Token → Átomo
-    typedef struct {
+   typedef struct {
        int clase;
        int valor;
-       char atomo[12];  // Átomo correspondiente
+       char atomo[3];  // Átomo correspondiente 
    } MapeoAtomo;
 
    // Mapeo completo según el proyecto
    MapeoAtomo tabla_atomos[] = {
        // Palabras Reservadas (Clase 0)
-       {0, 0, "alternative"}, {0, 1, "big"}, {0, 2, "evaluate"},
-       {0, 3, "instead"}, {0, 4, "large"}, {0, 5, "loop"},
-       {0, 6, "make"}, {0, 7, "number"}, {0, 8, "other"},
-       {0, 9, "real"}, {0, 10, "repeat"}, {0, 11, "select"},
-       {0, 12, "small"}, {0, 13, "step"}, {0, 14, "stop"},
-       {0, 15, "symbol"}, {0, 16, "throw"},
+    //    {0, 0, "alternative"}, {0, 1, "big"}, {0, 2, "evaluate"},
+    //    {0, 3, "instead"}, {0, 4, "large"}, {0, 5, "loop"},
+    //    {0, 6, "make"}, {0, 7, "number"}, {0, 8, "other"},
+    //    {0, 9, "real"}, {0, 10, "repeat"}, {0, 11, "select"},
+    //    {0, 12, "small"}, {0, 13, "step"}, {0, 14, "stop"},
+    //    {0, 15, "symbol"}, {0, 16, "throw"},
+    {0, 0, "a"}, {0, 1, "b"}, {0, 2, "f"},
+    {0, 3, "t"}, {0, 4, "g"}, {0, 5, "w"},
+    {0, 6, "m"}, {0, 7, "#"}, {0, 8, "o"},
+    {0, 9, "f"}, {0, 10, "j"}, {0, 11, "h"},
+    {0, 12, "p"}, {0, 13, "c"}, {0, 14, "q"},
+    {0, 15, "y"}, {0, 16, "z"},
        
-       // Identificadores (Clase 1) → id
-       {1, -1, "id"},
+       // Identificadores (Clase 1) → i
+       {1, -1, "i"},
        
-       // Literales Numéricas (Clase 2, 3) → num
-       {2, -1, "num"}, {3, -1, "num"},
+       // Literales Numéricas (Clase 2) → n
+       {2, -1, "n"},
        
-       // Literales Cadena (Clase 4) → lit
-       {4, -1, "lit"},
+       // Literales Reales (Clase 3) → r
+       {3, -1, "r"},
+       
+       // Literales Cadena (Clase 4) → s
+       {4, -1, "s"},
        
        // Delimitadores (Clase 5)
        {5, 0, "["}, {5, 1, "]"}, {5, 2, "("}, {5, 3, ")"},
@@ -516,12 +526,14 @@ char *yytext;
        {5, 8, ";"},
        
        // Operadores Aritméticos (Clase 6)
-       {6, 1, "+"}, {6, 2, "/"}, {6, 3, "*"}, {6, 4, "%"},
-       {6, 5, "-"}, {6, 6, "^"}, {6, 7, "\\"},
+       {6, 0, "+"}, {6, 1, "-"}, {6, 2, "*"}, {6, 3, "/"},
+       {6, 4, "%"}, {6, 5, "\\"}, {6, 6, "^"},
        
        // Operadores Relacionales (Clase 7)
-       {7, 0, "<"}, {7, 1, ">"}, {7, 2, "<="}, {7, 3, ">="},
-       {7, 4, "=="}, {7, 5, "!="},
+    //    {7, 0, "<"}, {7, 1, ">"}, {7, 2, "<="}, {7, 3, ">="},
+    //    {7, 4, "=="}, {7, 5, "!="},
+       {7, 0, "<"}, {7, 1, ">"}, {7, 2, "l"}, {7, 3, "u"},
+       {7, 4, "e"}, {7, 5, "d"},
        
        // Asignación (Clase 8)
        {8, 0, "="},
@@ -530,20 +542,24 @@ char *yytext;
    };
 
    char *cadena_atomos = NULL;
-   size_t tam_atomos = 0;      // Tamaño actual
-   size_t capacidad_atomos = 1024; // Capacidad inicial
+   size_t tam_atomos = 0;
+   size_t capacidad_atomos = 1024;
 
    // Variables de archivos
    extern FILE *yyout;
    extern FILE *yyin;
    FILE *apSal;
    
-void mostrar_reporte_completo(int sintacticamente_correcto);
-const char* obtener_atomo(int clase, int valor);
-void agregar_atomo(const char *atomo);
-void inicializar_cadena_atomos();
+   // ==================== DECLARACIONES DE FUNCIONES ====================
+   void mostrar_reporte_completo(int sintacticamente_correcto);
+   const char* obtener_atomo(int clase, int valor);
+   void agregar_atomo(const char *atomo);
+   void inicializar_cadena_atomos();
+   void imprimirTokens(ListaC *inicio, FILE *output_file);
 
-void imprimir_token(int clase, int pos) {
+   // ==================== FUNCIONES PRINCIPALES PARA EL ANALIZADOR LÉXICO ====================
+   
+   void imprimir_token(int clase, int pos) {
        // 1. Insertar en la lista de tokens
        InsertarToken(clase, pos);
        
@@ -552,14 +568,46 @@ void imprimir_token(int clase, int pos) {
        agregar_atomo(atomo);
        
        // 3. Imprimir (para debugging)
-       printf("Token: (%d, %d) → Átomo: %s\n", clase, pos, atomo);
-       fprintf(apSal, "Token: (%d, %d) → Átomo: %s\n", clase, pos, atomo);
+       printf("Token: (%d, %d) -> Atomo: %s\n", clase, pos, atomo);
+       fprintf(apSal, "Token: (%d, %d) -> Atomo: %s\n", clase, pos, atomo);
        fflush(apSal);
    }
    
-   // Función para insertar token en la lista
+   void imprimirTokens(ListaC *inicio, FILE *output_file){
+    if(inicio == NULL){
+        printf("La lista está vacía.\n");
+        if (output_file) fprintf(output_file, "La lista está vacía.\n");
+        return;
+    }
+
+    ListaC *corredor = inicio;
+    int contador = 0;
+    
+    do {
+        const char *atomo = obtener_atomo(corredor->tipo, corredor->posicion);
+        
+        printf("Token %d: Clase=%d, Valor=%d, Atomo=%s\n", 
+               ++contador,
+               corredor->tipo,
+               corredor->posicion,
+               atomo);
+               
+        if (output_file) {
+            fprintf(output_file, "Token %d: Clase=%d, Valor=%d, Atomo=%s\n", 
+                    contador,
+                    corredor->tipo,
+                    corredor->posicion,
+                    atomo);
+        }
+        
+        corredor = corredor->siguiente;
+    } while (corredor != inicio);
+}
+
    void InsertarToken(int clase, int valor){
-       InsertarFinal(&ListaT_inicio, valor, NULL, clase);
+       int pos_actual = pos_token;
+       InsertarFinal(&ListaT_inicio, pos_actual, NULL, clase);
+       pos_token++;
    }
 
    // ==================== FUNCIONES DE BÚSQUEDA/INSERCIÓN ====================
@@ -586,8 +634,23 @@ void imprimir_token(int clase, int pos) {
        }
 
        int posicion_actual = pos_tln;
-       InsertarFinal(&TLN_inicio, posicion_actual, numero, 0); 
+       InsertarFinal(&TLN_inicio, posicion_actual, numero, -1); 
        pos_tln++;
+       
+       return posicion_actual;
+   }
+
+   // NUEVA: Función separada para literales reales
+   int buscar_o_insertar_literal_real(char *numero) {
+       ListaC *nodo_encontrado = BuscarNodoPorDato(TLR_inicio, numero);
+       
+       if(nodo_encontrado != NULL){
+           return nodo_encontrado->posicion;
+       }
+
+       int posicion_actual = pos_tlr;
+       InsertarFinal(&TLR_inicio, posicion_actual, numero, -1); 
+       pos_tlr++;
        
        return posicion_actual;
    }
@@ -600,13 +663,13 @@ void imprimir_token(int clase, int pos) {
        }
 
        int posicion_actual = pos_tlc;
-       InsertarFinal(&TLC_inicio, posicion_actual, cadena, 0); 
+       InsertarFinal(&TLC_inicio, posicion_actual, cadena, -1); 
        pos_tlc++;
        
        return posicion_actual;
    }
 
-#line 610 "lex.yy.c"
+#line 673 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -757,10 +820,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 153 "ident.l"
+#line 216 "ident.l"
 
 
-#line 764 "lex.yy.c"
+#line 827 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -845,97 +908,97 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 155 "ident.l"
+#line 218 "ident.l"
 { /* Ignorar espacios en blanco */ }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 157 "ident.l"
+#line 220 "ident.l"
 { imprimir_token(0, 0); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 158 "ident.l"
+#line 221 "ident.l"
 { imprimir_token(0, 1); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 159 "ident.l"
+#line 222 "ident.l"
 { imprimir_token(0, 2); }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 160 "ident.l"
+#line 223 "ident.l"
 { imprimir_token(0, 3); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 161 "ident.l"
+#line 224 "ident.l"
 { imprimir_token(0, 4); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 162 "ident.l"
+#line 225 "ident.l"
 { imprimir_token(0, 5); }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 163 "ident.l"
+#line 226 "ident.l"
 { imprimir_token(0, 6); }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 164 "ident.l"
+#line 227 "ident.l"
 { imprimir_token(0, 7); }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 165 "ident.l"
+#line 228 "ident.l"
 { imprimir_token(0, 8); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 166 "ident.l"
+#line 229 "ident.l"
 { imprimir_token(0, 9); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 167 "ident.l"
+#line 230 "ident.l"
 { imprimir_token(0, 10); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 168 "ident.l"
+#line 231 "ident.l"
 { imprimir_token(0, 11); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 169 "ident.l"
+#line 232 "ident.l"
 { imprimir_token(0, 12); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 170 "ident.l"
+#line 233 "ident.l"
 { imprimir_token(0, 13); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 171 "ident.l"
+#line 234 "ident.l"
 { imprimir_token(0, 14); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 172 "ident.l"
+#line 235 "ident.l"
 { imprimir_token(0, 15); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 173 "ident.l"
+#line 236 "ident.l"
 { imprimir_token(0, 16); }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 175 "ident.l"
+#line 238 "ident.l"
 {
                     int pos = buscar_o_insertar_identificador(yytext);
                     imprimir_token(1, pos);
@@ -943,7 +1006,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 180 "ident.l"
+#line 243 "ident.l"
 {
                     int pos = buscar_o_insertar_literal_num(yytext);
                     imprimir_token(2, pos);
@@ -951,7 +1014,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 185 "ident.l"
+#line 248 "ident.l"
 {
                     int pos = buscar_o_insertar_literal_num(yytext);
                     imprimir_token(2, pos);
@@ -959,15 +1022,15 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 190 "ident.l"
+#line 253 "ident.l"
 {
-                    int pos = buscar_o_insertar_literal_num(yytext);
+                    int pos = buscar_o_insertar_literal_real(yytext);
                     imprimir_token(3, pos);
                 }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 195 "ident.l"
+#line 258 "ident.l"
 {
                     char* valor_limpio = strdup(yytext + 1);
                     valor_limpio[strlen(valor_limpio) - 1] = '\0';
@@ -978,133 +1041,133 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 203 "ident.l"
+#line 266 "ident.l"
 { imprimir_token(5, 0); }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 204 "ident.l"
+#line 267 "ident.l"
 { imprimir_token(5, 1); }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 205 "ident.l"
+#line 268 "ident.l"
 { imprimir_token(5, 2); }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 206 "ident.l"
+#line 269 "ident.l"
 { imprimir_token(5, 3); }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 207 "ident.l"
+#line 270 "ident.l"
 { imprimir_token(5, 4); }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 208 "ident.l"
+#line 271 "ident.l"
 { imprimir_token(5, 5); }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 209 "ident.l"
+#line 272 "ident.l"
 { imprimir_token(5, 6); }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 210 "ident.l"
+#line 273 "ident.l"
 { imprimir_token(5, 7); }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 211 "ident.l"
+#line 274 "ident.l"
 { imprimir_token(5, 8); }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 213 "ident.l"
-{ imprimir_token(6, 1); }
+#line 277 "ident.l"
+{ imprimir_token(6, 0); }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 214 "ident.l"
-{ imprimir_token(6, 2); }
+#line 278 "ident.l"
+{ imprimir_token(6, 1); }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 215 "ident.l"
-{ imprimir_token(6, 3); }
+#line 279 "ident.l"
+{ imprimir_token(6, 2); }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 216 "ident.l"
-{ imprimir_token(6, 4); }
+#line 280 "ident.l"
+{ imprimir_token(6, 3); }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 217 "ident.l"
-{ imprimir_token(6, 5); }
+#line 281 "ident.l"
+{ imprimir_token(6, 4); }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 218 "ident.l"
-{ imprimir_token(6, 6); }
+#line 282 "ident.l"
+{ imprimir_token(6, 5); }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 219 "ident.l"
-{ imprimir_token(6, 7); }
+#line 283 "ident.l"
+{ imprimir_token(6, 6); }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 221 "ident.l"
-{ imprimir_token(7, 2); }
+#line 285 "ident.l"
+{ imprimir_token(7, 0); }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 222 "ident.l"
-{ imprimir_token(7, 3); }
+#line 286 "ident.l"
+{ imprimir_token(7, 1); }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 223 "ident.l"
-{ imprimir_token(7, 4); }
+#line 287 "ident.l"
+{ imprimir_token(7, 2); }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 224 "ident.l"
-{ imprimir_token(7, 5); }
+#line 288 "ident.l"
+{ imprimir_token(7, 3); }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 225 "ident.l"
-{ imprimir_token(7, 0); }
+#line 289 "ident.l"
+{ imprimir_token(7, 4); }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 226 "ident.l"
-{ imprimir_token(7, 1); }
+#line 290 "ident.l"
+{ imprimir_token(7, 5); }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 228 "ident.l"
+#line 292 "ident.l"
 { imprimir_token(8, 0); }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 230 "ident.l"
+#line 294 "ident.l"
 { 
-            fprintf(stderr, "Error Léxico: Símbolo no reconocido '%s'\n", yytext);
-            fprintf(apSal, "Error Léxico: Símbolo no reconocido '%s'\n", yytext);
+            fprintf(stderr, "Error Lexico: Simbolo no reconocido '%s'\n", yytext);
+            fprintf(apSal, "Error Lexico: Simbolo no reconocido '%s'\n", yytext);
         }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 235 "ident.l"
+#line 299 "ident.l"
 ECHO;
 	YY_BREAK
-#line 1108 "lex.yy.c"
+#line 1171 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1990,24 +2053,23 @@ int main()
 	return 0;
 	}
 #endif
-#line 235 "ident.l"
+#line 299 "ident.l"
 
 
 int yywrap() {
     return 1;
 }
 
+
 // ==================== FUNCIÓN MAIN ====================
 
 int main(int argc, char *argv[]){
-    // Validación de argumentos
     if (argc != 2) {
         printf("Uso: %s <archivo_entrada>\n", argv[0]);
         printf("Ejemplo: %s programa.txt\n", argv[0]);
         return 1;
     }
     
-    // Abrir archivos
     yyin = fopen(argv[1], "r");
     if (yyin == NULL) {
         printf("Error: No se pudo abrir el archivo '%s'\n", argv[1]);
@@ -2021,199 +2083,203 @@ int main(int argc, char *argv[]){
         return 1;
     }
     
-    // NUEVA: Inicializar cadena de átomos
     inicializar_cadena_atomos();
     
     printf("\n-----------------------------------------------------------\n");
     printf("|        COMPILADOR - PROYECTO 2                             |\n");
-    printf("|        Analizador Léxico + Sintáctico                      |\n");
+    printf("|        Analizador Lexico + Sintactico                      |\n");
     printf("-------------------------------------------------------------\n\n");
     
     printf("Analizando el archivo: %s\n", argv[1]);
-    printf("Los resultados se guardarán en: resultados.txt\n\n");
+    printf("Los resultados se guardaran en: resultados.txt\n\n");
     
     fprintf(apSal, "-------------------------------------------------------------\n");
     fprintf(apSal, "|        COMPILADOR - PROYECTO 2                             |\n");
-    fprintf(apSal, "|       Analizador Léxico + Sintáctico                      |\n");
+    fprintf(apSal, "|       Analizador Lexico + Sintactico                      |\n");
     fprintf(apSal, "-------------------------------------------------------------\n\n");
     fprintf(apSal, "Archivo de entrada: %s\n\n", argv[1]);
-    
     fprintf(apSal, "=== FASE 1: ANALISIS LEXICO ===\n\n");
     fflush(apSal);
     
     yyout = apSal;
     
-    // FASE 1: Análisis Léxico
     printf("--- FASE 1: ANALISIS LEXICO ---\n");
     yylex();
-    printf("✓ Análisis léxico completado\n\n");
+    printf(" Analisis lexico completado!\n\n");
     
     fprintf(apSal, "\n=== FASE 2: ANALISIS SINTACTICO ===\n\n");
     fflush(apSal);
     
-    // FASE 2: Análisis Sintáctico
     printf("--- FASE 2: ANALISIS SINTACTICO ---\n");
     
-    // Variable para indicar si el análisis sintáctico fue exitoso
-    int resultado_sintactico = 1;  // 1 = correcto, 0 = con errores
+    int resultado_sintactico = 1;
     
     // TODO: Aquí las Personas 2 y 3 llamarán a sus funciones:
-    // 
-    // PERSONA 2 (Analizador Predictivo):
     // resultado_sintactico = analisis_predictivo(cadena_atomos);
-    //
-    // PERSONA 3 (Analizador Recursivo Descendente):
     // resultado_sintactico = analisis_recursivo();
-    //
-    // Por ahora, asumimos que es correcto para pruebas
     
     printf("(Esperando implementación de analizadores sintácticos)\n");
     fprintf(apSal, "(Esperando implementación de analizadores sintácticos)\n");
     
-    printf("✓ Análisis sintáctico completado\n\n");
+    printf("Analisis sintactico completado!\n\n");
     
-    // FASE 3: Reporte Final
     fprintf(apSal, "\n=== FASE 3: REPORTE FINAL ===\n");
     mostrar_reporte_completo(resultado_sintactico);
     
-    // Liberar memoria
     free(cadena_atomos);
     
     fclose(yyin);
     fclose(apSal);
     
-    printf("\nAnalisis completado. Revisa el archivo 'resultados.txt' para ver los resultados.\n");
+    printf("\nAnalisis completado. Revisa el archivo 'resultados.txt' para ver los resultados :3\n");
     
+    liberarLista(&TS_inicio);
+    liberarLista(&TLN_inicio);
+    liberarLista(&TLR_inicio);
+    liberarLista(&ListaT_inicio);
+    liberarLista(&TLC_inicio);
+
     return 0;
 }
 
-   // Inicializar la cadena de átomos
-   void inicializar_cadena_atomos() {
-       cadena_atomos = (char*)malloc(capacidad_atomos * sizeof(char));
-       if (cadena_atomos == NULL) {
-           perror("Error al asignar memoria para cadena de átomos");
-           exit(EXIT_FAILURE);
-       }
-       cadena_atomos[0] = '\0';  // Cadena vacía
-       tam_atomos = 0;
-   }
-   
-   // Agregar átomo a la cadena
-   void agregar_atomo(const char *atomo) {
-       size_t len_atomo = strlen(atomo);
-       size_t espacio_necesario = tam_atomos + len_atomo + 2; // +1 espacio +1 '\0'
-       
-       // Expandir si es necesario
-       if (espacio_necesario > capacidad_atomos) {
-           capacidad_atomos *= 2;
-           char *nuevo = (char*)realloc(cadena_atomos, capacidad_atomos);
-           if (nuevo == NULL) {
-               perror("Error al expandir cadena de átomos");
-               free(cadena_atomos);
-               exit(EXIT_FAILURE);
-           }
-           cadena_atomos = nuevo;
-       }
-       
-       // Agregar espacio si no es el primer átomo
-       if (tam_atomos > 0) {
-           strcat(cadena_atomos, " ");
-           tam_atomos++;
-       }
-       
-       // Agregar el átomo
-       strcat(cadena_atomos, atomo);
-       tam_atomos += len_atomo;
-   }
-   
-   // Buscar átomo correspondiente a un token
-   const char* obtener_atomo(int clase, int valor) {
-       // Casos especiales: id, num, lit (valor no importa)
-       if (clase == 1) return "id";
-       if (clase == 2 || clase == 3) return "num";
-       if (clase == 4) return "lit";
-       
-       // Buscar en la tabla
-       for (int i = 0; tabla_atomos[i].clase != -1; i++) {
-           if (tabla_atomos[i].clase == clase && 
-               tabla_atomos[i].valor == valor) {
-               return tabla_atomos[i].atomo;
-           }
-       }
-       
-       return "ERROR";  // No debería llegar aquí
-   }
-   
-// ==================== MÓDULO DE REPORTE FINAL ====================
-   
+// ==================== IMPLEMENTACIÓN DE FUNCIONES ====================
+
+// Inicializar la cadena de átomos
+void inicializar_cadena_atomos() {
+    cadena_atomos = (char*)malloc(capacidad_atomos * sizeof(char));
+    if (cadena_atomos == NULL) {
+        perror("Error al asignar memoria para cadena de átomos");
+        exit(EXIT_FAILURE);
+    }
+    cadena_atomos[0] = '\0';
+    tam_atomos = 0;
+}
+
+
+// Agregar átomo a la cadena
+void agregar_atomo(const char *atomo) {
+    size_t len_atomo = strlen(atomo);
+    size_t espacio_necesario = tam_atomos + len_atomo + 2;
+    
+    if (espacio_necesario > capacidad_atomos) {
+        capacidad_atomos *= 2;
+        char *nuevo = (char*)realloc(cadena_atomos, capacidad_atomos);
+        if (nuevo == NULL) {
+            perror("Error al expandir cadena de átomos");
+            free(cadena_atomos);
+            exit(EXIT_FAILURE);
+        }
+        cadena_atomos = nuevo;
+    }
+    
+    if (tam_atomos > 0) {
+        strcat(cadena_atomos, " ");
+        tam_atomos++;
+    }
+    
+    strcat(cadena_atomos, atomo);
+    tam_atomos += len_atomo;
+}
+
+// Buscar átomo correspondiente a un token
+const char* obtener_atomo(int clase, int valor) {
+    // Casos especiales: id, n, r, s (valor no importa)
+    if (clase == 1) return "id";
+    if (clase == 2) return "n";
+    if (clase == 3) return "r";
+    if (clase == 4) return "s";
+    
+    // Buscar en la tabla
+    for (int i = 0; tabla_atomos[i].clase != -1; i++) {
+        if (tabla_atomos[i].clase == clase && 
+            tabla_atomos[i].valor == valor) {
+            return tabla_atomos[i].atomo;
+        }
+    }
+    
+    return "ERROR";
+}
+
+
+// Módulo de Reporte Final
 void mostrar_reporte_completo(int sintacticamente_correcto) {
-       printf("\n");
-       printf("--------------------------------------------------------------\n");
-       printf("|         REPORTE COMPLETO DEL ANALISIS                      \n");
-       printf("--------------------------------------------------------------\n\n");
-       
-       fprintf(apSal, "\n");
-       fprintf(apSal, "-------------------------------------------------------------\n");
-       fprintf(apSal, "|          REPORTE COMPLETO DEL ANALISIS                     |\n");
-       fprintf(apSal, "--------------------------------------------------------------\n\n");
-       
-       // 1. Cadena de Átomos (NUEVA)
-       printf("--- CADENA DE ATOMOS ---\n");
-       printf("%s\n\n", cadena_atomos);
-       fprintf(apSal, "--- CADENA DE ATOMOS ---\n");
-       fprintf(apSal, "%s\n\n", cadena_atomos);
-       
-       // 2. Tokens Generados
-       printf("--- TOKENS GENERADOS ---\n");
-       fprintf(apSal, "--- TOKENS GENERADOS ---\n");
-       imprimirLista(ListaT_inicio, apSal);
-       
-       // 3. Tabla de Símbolos
-       printf("\n--- TABLA DE SIMBOLOS ---\n");
-       fprintf(apSal, "\n--- TABLA DE SÍMBOLOS ---\n");
-       if (TS_inicio != NULL) {
-           imprimirLista(TS_inicio, apSal);
-       } else {
-           printf("(vacía)\n");
-           fprintf(apSal, "(vacía)\n");
-       }
-       
-       // 4. Tabla de Literales Numéricas
-       printf("\n--- TABLA DE LITERALES NUMERICAS ---\n");
-       fprintf(apSal, "\n--- TABLA DE LITERALES NUMERICAS ---\n");
-       if (TLN_inicio != NULL) {
-           imprimirLista(TLN_inicio, apSal);
-       } else {
-           printf("(vacia)\n");
-           fprintf(apSal, "(vacia)\n");
-       }
-       
-       // 5. Tabla de Literales Cadena
-       printf("\n--- TABLA DE LITERALES CADENAS ---\n");
-       fprintf(apSal, "\n--- TABLA DE LITERALES CADENAS ---\n");
-       if (TLC_inicio != NULL) {
-           imprimirLista(TLC_inicio, apSal);
-       } else {
-           printf("(vacia)\n");
-           fprintf(apSal, "(vacia)\n");
-       }
-       
-       // 6. Resultado del análisis sintáctico
-       printf("\n");
-       printf("--------------------------------------------------------------\n");
-       if (sintacticamente_correcto) {
-           printf("|  ✓ PROGRAMA SINTACTICAMENTE CORRECTO                      |\n");
-       } else {
-           printf("|  ✗ ERRORES SINTACTICOS ENCONTRADOS                        |\n");
-       }
-       printf("----------------------------------------------------------------\n");
-       
-       fprintf(apSal, "\n");
-       fprintf(apSal, "---------------------------------------------------------------\n");
-       if (sintacticamente_correcto) {
-           fprintf(apSal, "|  ✓ PROGRAMA SINTÁCTICAMENTE CORRECTO                      |\n");
-       } else {
-           fprintf(apSal, "|  ✗ ERRORES SINTÁCTICOS ENCONTRADOS                        |\n");
-       }
-       fprintf(apSal, "----------------------------------------------------------------\n");
-   }
+    printf("\n");
+    printf("--------------------------------------------------------------\n");
+    printf("|         REPORTE COMPLETO DEL ANALISIS                      \n");
+    printf("--------------------------------------------------------------\n\n");
+    
+    fprintf(apSal, "\n");
+    fprintf(apSal, "-------------------------------------------------------------\n");
+    fprintf(apSal, "|          REPORTE COMPLETO DEL ANALISIS                     |\n");
+    fprintf(apSal, "--------------------------------------------------------------\n\n");
+    
+    // 1. Cadena de Átomos
+    printf("--- CADENA DE ATOMOS ---\n");
+    printf("%s\n\n", cadena_atomos);
+    fprintf(apSal, "--- CADENA DE ATOMOS ---\n");
+    fprintf(apSal, "%s\n\n", cadena_atomos);
+    
+    // 2. Tokens Generados
+    printf("--- TOKENS GENERADOS ---\n");
+    fprintf(apSal, "--- TOKENS GENERADOS ---\n");
+    imprimirTokens(ListaT_inicio, apSal);
+    
+    // 3. Tabla de Símbolos
+    printf("\n--- TABLA DE SIMBOLOS ---\n");
+    fprintf(apSal, "\n--- TABLA DE SIMBOLOS ---\n");
+    if (TS_inicio != NULL) {
+        imprimirLista(TS_inicio, apSal);
+    } else {
+        printf("(vacia)\n");
+        fprintf(apSal, "(vacia)\n");
+    }
+    
+    // 4. Tabla de Literales Numéricas (Clase 2)
+    printf("\n--- TABLA DE LITERALES NUMERICAS (Enteros/Octales) ---\n");
+    fprintf(apSal, "\n--- TABLA DE LITERALES NUMERICAS (Enteros/Octales) ---\n");
+    if (TLN_inicio != NULL) {
+        imprimirLista(TLN_inicio, apSal);
+    } else {
+        printf("(vacia)\n");
+        fprintf(apSal, "(vacia)\n");
+    }
+    
+    // 5. Tabla de Literales Reales (Clase 3) - NUEVA
+    printf("\n--- TABLA DE LITERALES REALES (Decimales) ---\n");
+    fprintf(apSal, "\n--- TABLA DE LITERALES REALES (Decimales) ---\n");
+    if (TLR_inicio != NULL) {
+        imprimirLista(TLR_inicio, apSal);
+    } else {
+        printf("(vacia)\n");
+        fprintf(apSal, "(vacia)\n");
+    }
+    
+    // 6. Tabla de Literales Cadena
+    printf("\n--- TABLA DE LITERALES CADENAS ---\n");
+    fprintf(apSal, "\n--- TABLA DE LITERALES CADENAS ---\n");
+    if (TLC_inicio != NULL) {
+        imprimirLista(TLC_inicio, apSal);
+    } else {
+        printf("(vacia)\n");
+        fprintf(apSal, "(vacia)\n");
+    }
+    
+    // 7. Resultado del análisis sintáctico
+    printf("\n");
+    printf("--------------------------------------------------------------\n");
+    if (sintacticamente_correcto) {
+        printf("|  PROGRAMA SINTACTICAMENTE CORRECTO  |\n");
+    } else {
+        printf("|  ERRORES SINTACTICOS ENCONTRADOS  |\n");
+    }
+    printf("----------------------------------------------------------------\n");
+    
+    fprintf(apSal, "\n");
+    fprintf(apSal, "---------------------------------------------------------------\n");
+    if (sintacticamente_correcto) {
+        fprintf(apSal, "|  PROGRAMA SINTACTICAMENTE CORRECTO  |\n");
+    } else {
+        fprintf(apSal, "|  ERRORES SINTACTICOS ENCONTRADOS   |\n");
+    }
+    fprintf(apSal, "----------------------------------------------------------------\n");
+}

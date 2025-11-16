@@ -55,7 +55,6 @@ ListaC* CreadorDeNodos(int pos, char* dato, int tipo){
 
 // listaCircular.c
 
-// ELIMINAR O COMENTAR: void InsertarInicio(ListaC ** inicio, char* dato){...}
 
 void InsertarFinal(ListaC ** inicio, int pos, char* dato, int tipo){
     // Nota: Eliminé la variable global 'tamanio' ya que no es necesaria para la inserción
@@ -82,26 +81,6 @@ void InsertarFinal(ListaC ** inicio, int pos, char* dato, int tipo){
     }
 }
 
-// void InsertarFinal(ListaC **inicio, char* dato){
-//     tamanio++;
-//     ListaC *nodo = CreadorDeNodos(dato);
-//     ListaC *aux;
-//     if(*inicio == NULL){
-//         *inicio = nodo;
-//         (*inicio)->siguiente = (*inicio);
-//     }
-//     else{
-//         aux = (*inicio);
-//         while(aux->siguiente != *inicio){
-//             aux = aux->siguiente;
-//         }
-//         aux->siguiente = nodo; //El último nodo (aux) apunta al nuevo nodo        
-//         nodo->siguiente = (*inicio);
-//         nodo->posicion = tamanio;
-//     }
-// }
-// listaCircular.c
-
 ListaC* BuscarNodoPorDato(ListaC *inicio, char* valor){
     if(inicio == NULL || valor == NULL){
         return NULL; // Lista vacía o valor de búsqueda inválido
@@ -112,7 +91,7 @@ ListaC* BuscarNodoPorDato(ListaC *inicio, char* valor){
     // Recorre la lista una vez
     do {
         // Verifica si el campo dato es NULL (ej. si es un token simple) o si coincide
-        //cuando son iguales las cadenas strcmp es igual a 0
+        //cuando son iguales las cadenas strcmp es igual a 1
         if (aux->dato != NULL && strcmp(aux->dato, valor) == 0) {
             return aux; // Nodo encontrado
         }
@@ -149,23 +128,25 @@ void imprimirLista(ListaC *inicio, FILE *output_file){
     } while (corredor != inicio);
 }
 
-void imprimirTokens(ListaC *inicio, FILE *output_file){
-    if(inicio == NULL){
-        printf("La lista de tokens está vacía .\n");
-        if(output_file) fprintf(output_file, "La lista de tokens está vacía .\n");
-        return;
-    }
+// void imprimirTokens(ListaC *inicio, FILE *output_file){
+//     if(inicio == NULL){
+//         printf("La lista de tokens está vacía .\n");
+//         if(output_file) fprintf(output_file, "La lista de tokens está vacía .\n");
+//         return;
+//     }
 
-    ListaC *corredor = inicio;
-    do{
-        printf("Token: (%d, %d)\n", corredor->tipo, corredor->posicion);
+//     ListaC *corredor = inicio;
+//     do{
+//         printf("Token: (%d, %d)\n", corredor->tipo, corredor->posicion);
 
-        if(output_file){
-            fprintf(output_file, "Token: (%d, %d)\n", corredor->tipo, corredor->posicion);
-        }
-        corredor = corredor->siguiente;
-    }while(corredor->siguiente != inicio);
-}
+//         if(output_file){
+//             fprintf(output_file, "Token: (%d, %d)\n", corredor->tipo, corredor->posicion);
+//         }
+//         corredor = corredor->siguiente;
+//     }while(corredor->siguiente != inicio);
+// }
+
+
 
 void liberarLista(ListaC **inicio) {
     if (*inicio == NULL) return;
@@ -182,37 +163,9 @@ void liberarLista(ListaC **inicio) {
     
     *inicio = NULL;
 }
-// COMENTAR/ELIMINAR: int BuscarNumero(ListaC ** inicio, char* nombre){...} ya que se reemplaza por BuscarNodoPorDato
 
-
-// void imprimirToken(ListaC ** inicio, int posicion){
-//     //verificación de lista vacía
-//     if(*inicio == NULL){
-//         printf("No hay tokens por imprimir. \n");
-//         return;
-//     }
-    
-//     //verificación de límites (asumiendo que 'tamanio' es global y correcto)
-//     if (posicion <= 0 || posicion > tamanio) {
-//         printf("Error: Posición %d fuera de rango (1 a %zu). \n", posicion, tamanio);
-//         return;
-//     }
-
-//     // Empezamos en *inicio (posición 1)
-//     ListaC *corredor = *inicio;
-    
-//     // El bucle NO se ejecuta si posicion es 1
-//     for(int i = 1; i < posicion; i++){
-//         corredor = corredor->siguiente;
-//     }
-//     // Imprime el dato
-//     printf("%s \n", corredor->dato);
-// }
-
-
-
-
-//al eliminar un nodo primero se elimina el string
+//al eliminar un nodo primero se elimina el string primero (para eliminar todo) 
+//porque si no solo eliminas la referencia al nodo pero no el valor en si
 // void eliminar_nodo(ListaC *nodo_a_eliminar) {
 //     if (nodo_a_eliminar->dato != NULL) {
 //         free(nodo_a_eliminar->dato); //se libera la memoria del string
