@@ -125,16 +125,16 @@ EntradaTabla tabla_parser[] = {
     {"X", "i", 83}, {"X", "n", 83}, {"X", "r", 83}, {"X", "s", 83}, {"X", ";", 84},
     {"Z", "i", 85}, {"Z", ")", 86},
     {"H", "h", 87},
-    {"C'", "a", 88}, {"C'", "o", 89}, {"C'", "}", 89},
+    {"C'", "a", 88}, {"C'", "o", 89}, {"C'", "}", 89}, {"C'", "$", 89},
     {"O'", "o", 90}, {"O'", "}", 91},
-    {"U", "q", 92}, {"U", "a", 93}, {"U", "o", 93}, {"U", "}", 93},
+    {"U", "q", 92}, {"U", "a", 93}, {"U", "$", 93}, {"U", "o", 93}, {"U", "}", 93},
     
     // Devuelve, Llama, arg
     {"<Devuelve>", "z", 94},
     {"<valor>", "i", 95}, {"<valor>", "n", 95}, {"<valor>", "r", 95}, {"<valor>", "s", 95}, {"<valor>", ")", 96},
     {"<Llama>", "[", 97},
     {"<arg>", ")", 98}, {"<arg>", "i", 99}, {"<arg>", "n", 99}, {"<arg>", "r", 99}, {"<arg>", "s", 99},
-    {"<otroArg>", ",", 100}, {"<otroArg>", ")", 101},
+    {"<otroArg>", ",", 100}, {"<otroArg>", ")", 101}, {"<otroArg>", "$", 101},
     
     {"", "", -1}  // Terminador
 };
@@ -300,7 +300,7 @@ void aplicar_produccion(Pila *pila, int num_prod) {
         case 35: push(pila, "T'"); push(pila, "F"); push(pila, "*"); break;
         case 36: push(pila, "T'"); push(pila, "F"); push(pila, "/"); break;
         case 37: push(pila, "T'"); push(pila, "F"); push(pila, "\\"); break;
-        case 38: push(pila, "T'"); push(pila, "F"); push(pila, "%"); break;
+        case 38: push(pila, "T'"); push(pila, "F"); push(pila, "\%"); break;
         case 39: push(pila, "T'"); push(pila, "F"); push(pila, "^"); break;
         case 40: break;
         case 41: push(pila, ")"); push(pila, "E"); push(pila, "("); break;
