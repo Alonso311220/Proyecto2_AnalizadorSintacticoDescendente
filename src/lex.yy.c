@@ -573,7 +573,7 @@ char *yytext;
        fflush(apSal);
    }
    
-   void imprimirTokens(ListaC *inicio, FILE *output_file){
+void imprimirTokens(ListaC *inicio, FILE *output_file){
     if(inicio == NULL){
         printf("La lista está vacía.\n");
         if (output_file) fprintf(output_file, "La lista está vacía.\n");
@@ -604,7 +604,7 @@ char *yytext;
     } while (corredor != inicio);
 }
 
-   void InsertarToken(int clase, int valor){
+void InsertarToken(int clase, int valor){
        int pos_actual = pos_token;
        InsertarFinal(&ListaT_inicio, pos_actual, NULL, clase);
        pos_token++;
@@ -612,7 +612,7 @@ char *yytext;
 
    // ==================== FUNCIONES DE BÚSQUEDA/INSERCIÓN ====================
    
-   int buscar_o_insertar_identificador(char *ident){
+int buscar_o_insertar_identificador(char *ident){
        ListaC *nodo_encontrado = BuscarNodoPorDato(TS_inicio, ident);
        
        if(nodo_encontrado != NULL){
@@ -626,7 +626,7 @@ char *yytext;
        return posicion_actual;
    }
 
-   int buscar_o_insertar_literal_num(char *numero) {
+int buscar_o_insertar_literal_num(char *numero) {
        ListaC *nodo_encontrado = BuscarNodoPorDato(TLN_inicio, numero);
        
        if(nodo_encontrado != NULL){
@@ -641,7 +641,7 @@ char *yytext;
    }
 
    // NUEVA: Función separada para literales reales
-   int buscar_o_insertar_literal_real(char *numero) {
+int buscar_o_insertar_literal_real(char *numero) {
        ListaC *nodo_encontrado = BuscarNodoPorDato(TLR_inicio, numero);
        
        if(nodo_encontrado != NULL){
@@ -669,7 +669,336 @@ char *yytext;
        return posicion_actual;
    }
 
-#line 673 "lex.yy.c"
+#define MAX_PILA 100
+typedef struct{
+    char elementos[MAX_PILA][20];
+    int tope;
+} Pila;
+
+void inicializar_pila(Pila *p){
+    p->tope = -1;
+}
+void push(Pila *p, const char *simbolo){
+    if(p->tope < MAX_PILA - 1){
+        strcpy(p->elementos[++p->tope], simbolo);
+    }
+}
+char* pop(Pila *p){
+    if(p->tope >= 0){
+        return p->elementos[p->tope--];
+    }
+    return NULL;
+}
+char* tope_pila(Pila* p){
+    if(p->tope >= 0){
+        return p->elementos[p->tope];
+    }
+    return NULL;
+}
+int pila_vacia(Pila *p){
+    return p->tope == -1; //se encuentra inicializada nadamás (regresa un true o un false)
+}
+
+char **tokens_array;
+int indice_token = 0;
+int total_tokens = 0;
+int errores_sintacticos = 0;
+
+//ver reglas 
+
+
+typedef struct {
+    char no_terminal[10];
+    char terminal[10];
+    int produccion;
+} EntradaTabla;
+
+EntradaTabla tabla_parser[] = {
+    // No-Terminal, Terminal, Número de Producción
+    {"E",  "n",  1},  {"E",  "(",  1},
+    {"E'", "+",  2},  {"E'", ")",  3},  {"E'", "$", 3},
+    {"T",  "n",  4},  {"T",  "(",  4},
+    {"T'", "+",  6},  {"T'", "*",  5},  {"T'", ")", 6},  {"T'", "$", 6},
+    {"F",  "n",  7},  {"F",  "(",  8},
+    {"",   "",  -1}   // Terminador
+};
+
+int consultar_tabla(const char *no_terminal, const char *terminal) {
+    for (int i = 0; tabla_parser[i].produccion != -1; i++) {
+        if (strcmp(tabla_parser[i].no_terminal, no_terminal) == 0 &&
+            strcmp(tabla_parser[i].terminal, terminal) == 0) {
+            return tabla_parser[i].produccion;
+        }
+    }
+    return 0;  // Error: celda vacía
+}
+
+// Obtener producción como string
+const char* obtener_produccion(int num_prod) {
+    switch(num_prod) {
+        case 1: return "E → T E'";
+        case 2: return "E' → + T E'";
+        case 3: return "E' → ε";
+        case 4: return "T → F T'";
+        case 5: return "T' → * F T'";
+        case 6: return "T' → ε";
+        case 7: return "F → n";
+        case 8: return "F → ( E )";
+        default: return "ERROR";
+    }
+}
+
+// ==================== ANALIZADOR PREDICTIVO ====================
+
+void aplicar_produccion(Pila *pila, int num_prod) {
+    printf("  Aplicando: %s\n", obtener_produccion(num_prod));
+    
+    switch(num_prod) {
+        case 1: // E → T E'
+            push(pila, "E'");
+            push(pila, "T");
+            break;
+        case 2: // E' → + T E'
+            push(pila, "E'");
+            push(pila, "T");
+            push(pila, "+");
+            break;
+        case 3: // E' → ε (no hace nada)
+            break;
+        case 4: // T → F T'
+            push(pila, "T'");
+            push(pila, "F");
+            break;
+        case 5: // T' → * F T'
+            push(pila, "T'");
+            push(pila, "F");
+            push(pila, "*");
+            break;
+        case 6: // T' → ε (no hace nada)
+            break;
+        case 7: // F → n
+            push(pila, "n");
+            break;
+        case 8: // F → ( E )
+            push(pila, ")");
+            push(pila, "E");
+            push(pila, "(");
+            break;
+    }
+}
+
+int es_no_terminal(const char *simbolo) {
+    return (strcmp(simbolo, "E") == 0 || strcmp(simbolo, "E'") == 0 ||
+            strcmp(simbolo, "T") == 0 || strcmp(simbolo, "T'") == 0 ||
+            strcmp(simbolo, "F") == 0);
+}
+
+int analisis_predictivo(const char *cadena_atomos) {
+    printf("\n=== ANALIZADOR PREDICTIVO ===\n");
+    printf("Entrada: %s\n\n", cadena_atomos);
+    
+    // Tokenizar la cadena
+    char *copia = strdup(cadena_atomos);
+    char *token = strtok(copia, " ");
+    int capacidad = 50;
+    tokens_array = malloc(capacidad * sizeof(char*));
+    total_tokens = 0;
+    
+    while (token != NULL) {
+        tokens_array[total_tokens] = strdup(token);
+        total_tokens++;
+        token = strtok(NULL, " ");
+    }
+    tokens_array[total_tokens] = strdup("$");  // Fin de entrada
+    total_tokens++;
+    free(copia);
+    
+    // Inicializar pila
+    Pila pila;
+    inicializar_pila(&pila);
+    push(&pila, "$");
+    push(&pila, "E");  // Símbolo inicial
+    
+    indice_token = 0;
+    int paso = 1;
+    
+    while (!pila_vacia(&pila)) {
+        char *X = tope_pila(&pila);
+        char *a = tokens_array[indice_token];
+        
+        printf("Paso %d:\n", paso++);
+        printf("  Pila: %s | Entrada: %s\n", X, a);
+        
+        // Caso 1: Fin exitoso
+        if (strcmp(X, "$") == 0 && strcmp(a, "$") == 0) {
+            printf("  ✓ ACEPTADO\n\n");
+            pop(&pila);
+            break;
+        }
+        
+        // Caso 2: Terminal coincide
+        if (!es_no_terminal(X)) {
+            if (strcmp(X, a) == 0) {
+                printf("  Match: %s\n", X);
+                pop(&pila);
+                indice_token++;
+            } else {
+                printf("  ✗ ERROR: Se esperaba '%s' pero se encontró '%s'\n", X, a);
+                errores_sintacticos++;
+                return 0;
+            }
+        }
+        // Caso 3: No-terminal (consultar tabla)
+        else {
+            int produccion = consultar_tabla(X, a);
+            if (produccion > 0) {
+                pop(&pila);
+                aplicar_produccion(&pila, produccion);
+            } else {
+                printf("  ✗ ERROR SINTÁCTICO: No hay producción para [%s, %s]\n", X, a);
+                errores_sintacticos++;
+                return 0;
+            }
+        }
+        printf("\n");
+    }
+    
+    // Limpiar memoria
+    for (int i = 0; i < total_tokens; i++) {
+        free(tokens_array[i]);
+    }
+    free(tokens_array);
+    
+    return (errores_sintacticos == 0);
+}
+
+// ==================== ANALIZADOR RECURSIVO DESCENDENTE ====================
+
+// Variables globales para recursivo
+char *token_actual;
+
+void avanzar() {
+    if (indice_token < total_tokens - 1) {
+        indice_token++;
+        token_actual = tokens_array[indice_token];
+    }
+}
+
+int match(const char *esperado) {
+    printf("  Match esperado: '%s' | actual: '%s'\n", esperado, token_actual);
+    if (strcmp(token_actual, esperado) == 0) {
+        avanzar();
+        return 1;
+    }
+    printf("  ✗ ERROR: Se esperaba '%s' pero se encontró '%s'\n", esperado, token_actual);
+    errores_sintacticos++;
+    return 0;
+}
+
+// Declaraciones adelantadas
+void parseE();
+void parseEP();
+void parseT();
+void parseTP();
+void parseF();
+
+// E → T E'
+void parseE() {
+    printf("Entrando a E\n");
+    parseT();
+    parseEP();
+}
+
+// E' → + T E' | ε
+void parseEP() {
+    printf("Entrando a E'\n");
+    if (strcmp(token_actual, "+") == 0) {
+        match("+");
+        parseT();
+        parseEP();
+    }
+    // ε: no hace nada
+}
+
+// T → F T'
+void parseT() {
+    printf("Entrando a T\n");
+    parseF();
+    parseTP();
+}
+
+// T' → * F T' | ε
+void parseTP() {
+    printf("Entrando a T'\n");
+    if (strcmp(token_actual, "*") == 0) {
+        match("*");
+        parseF();
+        parseTP();
+    }
+    // ε: no hace nada
+}
+
+// F → ( E ) | n
+void parseF() {
+    printf("Entrando a F\n");
+    if (strcmp(token_actual, "(") == 0) {
+        match("(");
+        parseE();
+        match(")");
+    } else if (strcmp(token_actual, "n") == 0) {
+        match("n");
+    } else {
+        printf("✗ ERROR: Se esperaba '(' o 'n'\n");
+        errores_sintacticos++;
+    }
+}
+
+int analisis_recursivo(const char *cadena_atomos) {
+    printf("\n=== ANALIZADOR RECURSIVO DESCENDENTE ===\n");
+    printf("Entrada: %s\n\n", cadena_atomos);
+    
+    // Tokenizar
+    char *copia = strdup(cadena_atomos);
+    char *token = strtok(copia, " ");
+    int capacidad = 50;
+    tokens_array = malloc(capacidad * sizeof(char*));
+    total_tokens = 0;
+    
+    while (token != NULL) {
+        tokens_array[total_tokens] = strdup(token);
+        total_tokens++;
+        token = strtok(NULL, " ");
+    }
+    tokens_array[total_tokens] = strdup("$");
+    total_tokens++;
+    free(copia);
+    
+    // Inicializar
+    indice_token = 0;
+    token_actual = tokens_array[0];
+    errores_sintacticos = 0;
+    
+    // Iniciar análisis desde el símbolo inicial
+    parseE();
+    
+    // Verificar que se consumió toda la entrada
+    if (strcmp(token_actual, "$") == 0 && errores_sintacticos == 0) {
+        printf("\n✓ ANÁLISIS EXITOSO\n");
+    } else {
+        printf("\n✗ ANÁLISIS CON ERRORES\n");
+    }
+    
+    // Limpiar
+    for (int i = 0; i < total_tokens; i++) {
+        free(tokens_array[i]);
+    }
+    free(tokens_array);
+    
+    return (errores_sintacticos == 0);
+}
+
+
+#line 1002 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -820,10 +1149,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 216 "ident.l"
+#line 545 "ident.l"
 
 
-#line 827 "lex.yy.c"
+#line 1156 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -908,97 +1237,97 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 218 "ident.l"
+#line 547 "ident.l"
 { /* Ignorar espacios en blanco */ }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 220 "ident.l"
+#line 549 "ident.l"
 { imprimir_token(0, 0); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 221 "ident.l"
+#line 550 "ident.l"
 { imprimir_token(0, 1); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 222 "ident.l"
+#line 551 "ident.l"
 { imprimir_token(0, 2); }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 223 "ident.l"
+#line 552 "ident.l"
 { imprimir_token(0, 3); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 224 "ident.l"
+#line 553 "ident.l"
 { imprimir_token(0, 4); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 225 "ident.l"
+#line 554 "ident.l"
 { imprimir_token(0, 5); }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 226 "ident.l"
+#line 555 "ident.l"
 { imprimir_token(0, 6); }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 227 "ident.l"
+#line 556 "ident.l"
 { imprimir_token(0, 7); }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 228 "ident.l"
+#line 557 "ident.l"
 { imprimir_token(0, 8); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 229 "ident.l"
+#line 558 "ident.l"
 { imprimir_token(0, 9); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 230 "ident.l"
+#line 559 "ident.l"
 { imprimir_token(0, 10); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 231 "ident.l"
+#line 560 "ident.l"
 { imprimir_token(0, 11); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 232 "ident.l"
+#line 561 "ident.l"
 { imprimir_token(0, 12); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 233 "ident.l"
+#line 562 "ident.l"
 { imprimir_token(0, 13); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 234 "ident.l"
+#line 563 "ident.l"
 { imprimir_token(0, 14); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 235 "ident.l"
+#line 564 "ident.l"
 { imprimir_token(0, 15); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 236 "ident.l"
+#line 565 "ident.l"
 { imprimir_token(0, 16); }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 238 "ident.l"
+#line 567 "ident.l"
 {
                     int pos = buscar_o_insertar_identificador(yytext);
                     imprimir_token(1, pos);
@@ -1006,7 +1335,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 243 "ident.l"
+#line 572 "ident.l"
 {
                     int pos = buscar_o_insertar_literal_num(yytext);
                     imprimir_token(2, pos);
@@ -1014,7 +1343,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 248 "ident.l"
+#line 577 "ident.l"
 {
                     int pos = buscar_o_insertar_literal_num(yytext);
                     imprimir_token(2, pos);
@@ -1022,7 +1351,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 253 "ident.l"
+#line 582 "ident.l"
 {
                     int pos = buscar_o_insertar_literal_real(yytext);
                     imprimir_token(3, pos);
@@ -1030,7 +1359,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 258 "ident.l"
+#line 587 "ident.l"
 {
                     char* valor_limpio = strdup(yytext + 1);
                     valor_limpio[strlen(valor_limpio) - 1] = '\0';
@@ -1041,122 +1370,122 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 266 "ident.l"
+#line 595 "ident.l"
 { imprimir_token(5, 0); }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 267 "ident.l"
+#line 596 "ident.l"
 { imprimir_token(5, 1); }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 268 "ident.l"
+#line 597 "ident.l"
 { imprimir_token(5, 2); }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 269 "ident.l"
+#line 598 "ident.l"
 { imprimir_token(5, 3); }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 270 "ident.l"
+#line 599 "ident.l"
 { imprimir_token(5, 4); }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 271 "ident.l"
+#line 600 "ident.l"
 { imprimir_token(5, 5); }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 272 "ident.l"
+#line 601 "ident.l"
 { imprimir_token(5, 6); }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 273 "ident.l"
+#line 602 "ident.l"
 { imprimir_token(5, 7); }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 274 "ident.l"
+#line 603 "ident.l"
 { imprimir_token(5, 8); }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 277 "ident.l"
+#line 606 "ident.l"
 { imprimir_token(6, 0); }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 278 "ident.l"
+#line 607 "ident.l"
 { imprimir_token(6, 1); }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 279 "ident.l"
+#line 608 "ident.l"
 { imprimir_token(6, 2); }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 280 "ident.l"
+#line 609 "ident.l"
 { imprimir_token(6, 3); }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 281 "ident.l"
+#line 610 "ident.l"
 { imprimir_token(6, 4); }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 282 "ident.l"
+#line 611 "ident.l"
 { imprimir_token(6, 5); }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 283 "ident.l"
+#line 612 "ident.l"
 { imprimir_token(6, 6); }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 285 "ident.l"
+#line 614 "ident.l"
 { imprimir_token(7, 0); }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 286 "ident.l"
+#line 615 "ident.l"
 { imprimir_token(7, 1); }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 287 "ident.l"
+#line 616 "ident.l"
 { imprimir_token(7, 2); }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 288 "ident.l"
+#line 617 "ident.l"
 { imprimir_token(7, 3); }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 289 "ident.l"
+#line 618 "ident.l"
 { imprimir_token(7, 4); }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 290 "ident.l"
+#line 619 "ident.l"
 { imprimir_token(7, 5); }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 292 "ident.l"
+#line 621 "ident.l"
 { imprimir_token(8, 0); }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 294 "ident.l"
+#line 623 "ident.l"
 { 
             fprintf(stderr, "Error Lexico: Simbolo no reconocido '%s'\n", yytext);
             fprintf(apSal, "Error Lexico: Simbolo no reconocido '%s'\n", yytext);
@@ -1164,10 +1493,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 299 "ident.l"
+#line 628 "ident.l"
 ECHO;
 	YY_BREAK
-#line 1171 "lex.yy.c"
+#line 1500 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2053,7 +2382,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 299 "ident.l"
+#line 628 "ident.l"
 
 
 int yywrap() {
@@ -2139,6 +2468,33 @@ int main(int argc, char *argv[]){
     liberarLista(&ListaT_inicio);
     liberarLista(&TLC_inicio);
 
+    //Analizador Semántico Y Sintáctico
+    const char *ejemplos[] = {
+        "n + n * n",      // Correcto
+        "( n + n ) * n",  // Correcto
+        "n + * n",        // Error
+        NULL
+    };
+    
+    for (int i = 0; ejemplos[i] != NULL; i++) {
+        printf("\n");
+        printf("═══════════════════════════════════════════════════════\n");
+        printf("EJEMPLO %d: %s\n", i+1, ejemplos[i]);
+        printf("═══════════════════════════════════════════════════════\n");
+        
+        // Probar analizador predictivo
+        int resultado1 = analisis_predictivo(ejemplos[i]);
+        
+        printf("\n");
+        
+        // Probar analizador recursivo
+        int resultado2 = analisis_recursivo(ejemplos[i]);
+        
+        printf("\nResultados: Predictivo=%s | Recursivo=%s\n", 
+               resultado1 ? "✓" : "✗",
+               resultado2 ? "✓" : "✗");
+    }
+    
     return 0;
 }
 
@@ -2183,8 +2539,8 @@ void agregar_atomo(const char *atomo) {
 
 // Buscar átomo correspondiente a un token
 const char* obtener_atomo(int clase, int valor) {
-    // Casos especiales: id, n, r, s (valor no importa)
-    if (clase == 1) return "id";
+    // Casos especiales: i, n, r, s (valor no importa)
+    if (clase == 1) return "i";
     if (clase == 2) return "n";
     if (clase == 3) return "r";
     if (clase == 4) return "s";

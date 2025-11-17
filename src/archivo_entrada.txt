@@ -1,55 +1,58 @@
-alternative
-big 
-evaluate
+//sentencia declarativa
+big $Grande=2, $num;
+real $numReal;
+symbol $cad="cadena#1", $cadVacia;
+
+//sentencia de asignación
+$num = $Grande+15*(o12-93);
+$cadVacia= "cadena#2";
+$numReal=27.9;
+
+//expresion aritmética
+34.7*25 (12.6+$num)/[$calcula(63)]
+
+//expresion relacional
+2 <= $num
+$cad=="cadena#2"
+40.8>$numReal
+
+//sentencia loop
+loop($num>6) make 
+{
+    <proposiciones>
+}
+
+//sentencia evaluate
+evaluate (<expRel>)
+    <proposiciones>
 instead
-large
-loop
-make
-number
-other
-real
-repeat
-select
-small
-step
-stop
-symbol
-throw
+    <proposiciones>
+evaluate (<expRel>)
+    <proposiciones>
 
-$clase_uno
-$identificadores
-$Alonso
-$Grupo_Compiladores
+//Sentencia repeat
+repeat($n=6; $n<10; $n=$n+1)
+{
+    <proposiciones>
+}
 
-$clase_2
+//Sentencia select
+select($num){
+    case 1: <proposiciones>
+        stop
+    case 2: <proposiciones>
+    other: <proposiciones>
+}
 
-o1234567 O2136 3432
-0432442
+//sentencia throw
+throw($valor);
+throw("cadena1");
+throw();
 
-$clase_3
-73.0     .0  10.2  
-.    12      4.
-$clase_4
-"Hola mundo"
-'a' 'b'
-"'"
-'"'
-"ejemplos no "validos"
-""
-"""
-"hola' mundo"
+//llamada a una función
+[$fun($x, 8)]
 
-[ ]
-{ }
-( ) 
-, :  ;
-
-$operadores_aritmeticos
-+ - * / % \  ^
-
-$operadores_relacionales
-< > <= >= == !=
-
-$operador_de_asignacion
-=
-=
+//funciones
+number $fun (real $x, number $n){
+    <sentencias>
+}

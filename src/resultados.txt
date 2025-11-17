@@ -7,100 +7,484 @@ Archivo de entrada: archivo_entrada.txt
 
 === FASE 1: ANALISIS LEXICO ===
 
-Token: (0, 0) -> Atomo: a
-Token: (0, 1) -> Atomo: b
-Token: (0, 2) -> Atomo: f
-Token: (0, 3) -> Atomo: t
-Token: (0, 4) -> Atomo: g
-Token: (0, 5) -> Atomo: w
-Token: (0, 6) -> Atomo: m
-Token: (0, 7) -> Atomo: #
-Token: (0, 8) -> Atomo: o
-Token: (0, 9) -> Atomo: f
-Token: (0, 10) -> Atomo: j
-Token: (0, 11) -> Atomo: h
-Token: (0, 12) -> Atomo: p
-Token: (0, 13) -> Atomo: c
-Token: (0, 14) -> Atomo: q
-Token: (0, 15) -> Atomo: y
-Token: (0, 16) -> Atomo: z
-Token: (1, 0) -> Atomo: id
-Token: (1, 1) -> Atomo: id
-Token: (1, 2) -> Atomo: id
-Token: (1, 3) -> Atomo: id
-Token: (1, 4) -> Atomo: id
-Token: (2, 0) -> Atomo: n
-Token: (2, 1) -> Atomo: n
-Token: (2, 2) -> Atomo: n
-Token: (2, 3) -> Atomo: n
-Token: (2, 4) -> Atomo: n
-Token: (2, 5) -> Atomo: n
-Token: (1, 4) -> Atomo: id
-Token: (2, 6) -> Atomo: n
-Token: (3, 0) -> Atomo: r
-Token: (3, 1) -> Atomo: r
-Token: (3, 2) -> Atomo: r
-Error Lexico: Simbolo no reconocido '.'
-Token: (2, 7) -> Atomo: n
-Token: (2, 8) -> Atomo: n
-Error Lexico: Simbolo no reconocido '.'
-Token: (1, 4) -> Atomo: id
-Token: (2, 8) -> Atomo: n
-Token: (4, 0) -> Atomo: s
-Token: (4, 1) -> Atomo: s
-Token: (4, 2) -> Atomo: s
-Token: (4, 3) -> Atomo: s
-Token: (4, 4) -> Atomo: s
-Token: (4, 5) -> Atomo: s
+Token: (6, 3) -> Atomo: /
+Token: (6, 3) -> Atomo: /
+Error Lexico: Simbolo no reconocido 's'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 't'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 'c'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'a'
+Error Lexico: Simbolo no reconocido 'd'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 'c'
+Error Lexico: Simbolo no reconocido 'l'
+Error Lexico: Simbolo no reconocido 'a'
+Error Lexico: Simbolo no reconocido 'r'
+Error Lexico: Simbolo no reconocido 'a'
+Error Lexico: Simbolo no reconocido 't'
+Error Lexico: Simbolo no reconocido 'i'
 Error Lexico: Simbolo no reconocido 'v'
 Error Lexico: Simbolo no reconocido 'a'
-Error Lexico: Simbolo no reconocido 'l'
-Error Lexico: Simbolo no reconocido 'i'
-Error Lexico: Simbolo no reconocido 'd'
-Error Lexico: Simbolo no reconocido 'o'
+Token: (0, 1) -> Atomo: b
+Token: (1, 0) -> Atomo: i
+Token: (8, 0) -> Atomo: =
+Token: (2, 0) -> Atomo: n
+Token: (5, 6) -> Atomo: ,
+Token: (1, 1) -> Atomo: i
+Token: (5, 8) -> Atomo: ;
+Token: (0, 9) -> Atomo: f
+Token: (1, 2) -> Atomo: i
+Token: (5, 8) -> Atomo: ;
+Token: (0, 15) -> Atomo: y
+Token: (1, 3) -> Atomo: i
+Token: (8, 0) -> Atomo: =
+Token: (4, 0) -> Atomo: s
+Token: (5, 6) -> Atomo: ,
+Token: (1, 4) -> Atomo: i
+Token: (5, 8) -> Atomo: ;
+Token: (6, 3) -> Atomo: /
+Token: (6, 3) -> Atomo: /
 Error Lexico: Simbolo no reconocido 's'
-Token: (4, 6) -> Atomo: s
-Token: (4, 6) -> Atomo: s
-Error Lexico: Simbolo no reconocido '"'
-Token: (4, 6) -> Atomo: s
-Error Lexico: Simbolo no reconocido 'h'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 't'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 'c'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'a'
+Error Lexico: Simbolo no reconocido 'd'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 'a'
+Error Lexico: Simbolo no reconocido 's'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'g'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 'a'
+Error Lexico: Simbolo no reconocido 'c'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'Ã'
+Error Lexico: Simbolo no reconocido '³'
+Error Lexico: Simbolo no reconocido 'n'
+Token: (1, 1) -> Atomo: i
+Token: (8, 0) -> Atomo: =
+Token: (1, 0) -> Atomo: i
+Token: (6, 0) -> Atomo: +
+Token: (2, 1) -> Atomo: n
+Token: (6, 2) -> Atomo: *
+Token: (5, 2) -> Atomo: (
+Token: (2, 2) -> Atomo: n
+Token: (6, 1) -> Atomo: -
+Token: (2, 3) -> Atomo: n
+Token: (5, 3) -> Atomo: )
+Token: (5, 8) -> Atomo: ;
+Token: (1, 4) -> Atomo: i
+Token: (8, 0) -> Atomo: =
+Token: (4, 1) -> Atomo: s
+Token: (5, 8) -> Atomo: ;
+Token: (1, 2) -> Atomo: i
+Token: (8, 0) -> Atomo: =
+Token: (3, 0) -> Atomo: r
+Token: (5, 8) -> Atomo: ;
+Token: (6, 3) -> Atomo: /
+Token: (6, 3) -> Atomo: /
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 'x'
+Error Lexico: Simbolo no reconocido 'p'
+Error Lexico: Simbolo no reconocido 'r'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 's'
+Error Lexico: Simbolo no reconocido 'i'
 Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 'a'
+Error Lexico: Simbolo no reconocido 'r'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 't'
+Error Lexico: Simbolo no reconocido 'm'
+Error Lexico: Simbolo no reconocido 'Ã'
+Error Lexico: Simbolo no reconocido '©'
+Error Lexico: Simbolo no reconocido 't'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'c'
+Error Lexico: Simbolo no reconocido 'a'
+Token: (3, 1) -> Atomo: r
+Token: (6, 2) -> Atomo: *
+Token: (2, 4) -> Atomo: n
+Token: (5, 2) -> Atomo: (
+Token: (3, 2) -> Atomo: r
+Token: (6, 0) -> Atomo: +
+Token: (1, 1) -> Atomo: i
+Token: (5, 3) -> Atomo: )
+Token: (6, 3) -> Atomo: /
+Token: (5, 0) -> Atomo: [
+Token: (1, 5) -> Atomo: i
+Token: (5, 2) -> Atomo: (
+Token: (2, 5) -> Atomo: n
+Token: (5, 3) -> Atomo: )
+Token: (5, 1) -> Atomo: ]
+Token: (6, 3) -> Atomo: /
+Token: (6, 3) -> Atomo: /
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 'x'
+Error Lexico: Simbolo no reconocido 'p'
+Error Lexico: Simbolo no reconocido 'r'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 's'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 'r'
+Error Lexico: Simbolo no reconocido 'e'
 Error Lexico: Simbolo no reconocido 'l'
 Error Lexico: Simbolo no reconocido 'a'
-Error Lexico: Simbolo no reconocido '''
-Error Lexico: Simbolo no reconocido 'm'
-Error Lexico: Simbolo no reconocido 'u'
-Error Lexico: Simbolo no reconocido 'n'
-Error Lexico: Simbolo no reconocido 'd'
+Error Lexico: Simbolo no reconocido 'c'
+Error Lexico: Simbolo no reconocido 'i'
 Error Lexico: Simbolo no reconocido 'o'
-Error Lexico: Simbolo no reconocido '"'
-Token: (5, 0) -> Atomo: [
-Token: (5, 1) -> Atomo: ]
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 'a'
+Error Lexico: Simbolo no reconocido 'l'
+Token: (2, 0) -> Atomo: n
+Token: (7, 2) -> Atomo: l
+Token: (1, 1) -> Atomo: i
+Token: (1, 3) -> Atomo: i
+Token: (7, 4) -> Atomo: e
+Token: (4, 1) -> Atomo: s
+Token: (3, 3) -> Atomo: r
+Token: (7, 1) -> Atomo: >
+Token: (1, 2) -> Atomo: i
+Token: (6, 3) -> Atomo: /
+Token: (6, 3) -> Atomo: /
+Error Lexico: Simbolo no reconocido 's'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 't'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 'c'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'a'
+Token: (0, 5) -> Atomo: w
+Token: (0, 5) -> Atomo: w
+Token: (5, 2) -> Atomo: (
+Token: (1, 1) -> Atomo: i
+Token: (7, 1) -> Atomo: >
+Token: (2, 6) -> Atomo: n
+Token: (5, 3) -> Atomo: )
+Token: (0, 6) -> Atomo: m
 Token: (5, 4) -> Atomo: {
+Token: (7, 0) -> Atomo: <
+Error Lexico: Simbolo no reconocido 'p'
+Error Lexico: Simbolo no reconocido 'r'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 'p'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 's'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'c'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 's'
+Token: (7, 1) -> Atomo: >
 Token: (5, 5) -> Atomo: }
+Token: (6, 3) -> Atomo: /
+Token: (6, 3) -> Atomo: /
+Error Lexico: Simbolo no reconocido 's'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 't'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 'c'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'a'
+Token: (0, 2) -> Atomo: f
+Token: (0, 2) -> Atomo: f
+Token: (5, 2) -> Atomo: (
+Token: (7, 0) -> Atomo: <
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 'x'
+Error Lexico: Simbolo no reconocido 'p'
+Error Lexico: Simbolo no reconocido 'R'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 'l'
+Token: (7, 1) -> Atomo: >
+Token: (5, 3) -> Atomo: )
+Token: (7, 0) -> Atomo: <
+Error Lexico: Simbolo no reconocido 'p'
+Error Lexico: Simbolo no reconocido 'r'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 'p'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 's'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'c'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 's'
+Token: (7, 1) -> Atomo: >
+Token: (0, 3) -> Atomo: t
+Token: (7, 0) -> Atomo: <
+Error Lexico: Simbolo no reconocido 'p'
+Error Lexico: Simbolo no reconocido 'r'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 'p'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 's'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'c'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 's'
+Token: (7, 1) -> Atomo: >
+Token: (0, 2) -> Atomo: f
+Token: (5, 2) -> Atomo: (
+Token: (7, 0) -> Atomo: <
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 'x'
+Error Lexico: Simbolo no reconocido 'p'
+Error Lexico: Simbolo no reconocido 'R'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 'l'
+Token: (7, 1) -> Atomo: >
+Token: (5, 3) -> Atomo: )
+Token: (7, 0) -> Atomo: <
+Error Lexico: Simbolo no reconocido 'p'
+Error Lexico: Simbolo no reconocido 'r'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 'p'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 's'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'c'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 's'
+Token: (7, 1) -> Atomo: >
+Token: (6, 3) -> Atomo: /
+Token: (6, 3) -> Atomo: /
+Error Lexico: Simbolo no reconocido 'S'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 't'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 'c'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'a'
+Token: (0, 10) -> Atomo: j
+Token: (0, 10) -> Atomo: j
+Token: (5, 2) -> Atomo: (
+Token: (1, 6) -> Atomo: i
+Token: (8, 0) -> Atomo: =
+Token: (2, 6) -> Atomo: n
+Token: (5, 8) -> Atomo: ;
+Token: (1, 6) -> Atomo: i
+Token: (7, 0) -> Atomo: <
+Token: (2, 7) -> Atomo: n
+Token: (5, 8) -> Atomo: ;
+Token: (1, 6) -> Atomo: i
+Token: (8, 0) -> Atomo: =
+Token: (1, 6) -> Atomo: i
+Token: (6, 0) -> Atomo: +
+Token: (2, 8) -> Atomo: n
+Token: (5, 3) -> Atomo: )
+Token: (5, 4) -> Atomo: {
+Token: (7, 0) -> Atomo: <
+Error Lexico: Simbolo no reconocido 'p'
+Error Lexico: Simbolo no reconocido 'r'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 'p'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 's'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'c'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 's'
+Token: (7, 1) -> Atomo: >
+Token: (5, 5) -> Atomo: }
+Token: (6, 3) -> Atomo: /
+Token: (6, 3) -> Atomo: /
+Error Lexico: Simbolo no reconocido 'S'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 't'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 'c'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'a'
+Token: (0, 11) -> Atomo: h
+Token: (0, 11) -> Atomo: h
+Token: (5, 2) -> Atomo: (
+Token: (1, 1) -> Atomo: i
+Token: (5, 3) -> Atomo: )
+Token: (5, 4) -> Atomo: {
+Error Lexico: Simbolo no reconocido 'c'
+Error Lexico: Simbolo no reconocido 'a'
+Error Lexico: Simbolo no reconocido 's'
+Error Lexico: Simbolo no reconocido 'e'
+Token: (2, 8) -> Atomo: n
+Token: (5, 7) -> Atomo: :
+Token: (7, 0) -> Atomo: <
+Error Lexico: Simbolo no reconocido 'p'
+Error Lexico: Simbolo no reconocido 'r'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 'p'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 's'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'c'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 's'
+Token: (7, 1) -> Atomo: >
+Token: (0, 14) -> Atomo: q
+Error Lexico: Simbolo no reconocido 'c'
+Error Lexico: Simbolo no reconocido 'a'
+Error Lexico: Simbolo no reconocido 's'
+Error Lexico: Simbolo no reconocido 'e'
+Token: (2, 0) -> Atomo: n
+Token: (5, 7) -> Atomo: :
+Token: (7, 0) -> Atomo: <
+Error Lexico: Simbolo no reconocido 'p'
+Error Lexico: Simbolo no reconocido 'r'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 'p'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 's'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'c'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 's'
+Token: (7, 1) -> Atomo: >
+Token: (0, 8) -> Atomo: o
+Token: (5, 7) -> Atomo: :
+Token: (7, 0) -> Atomo: <
+Error Lexico: Simbolo no reconocido 'p'
+Error Lexico: Simbolo no reconocido 'r'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 'p'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 's'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'c'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 's'
+Token: (7, 1) -> Atomo: >
+Token: (5, 5) -> Atomo: }
+Token: (6, 3) -> Atomo: /
+Token: (6, 3) -> Atomo: /
+Error Lexico: Simbolo no reconocido 's'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 't'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 'c'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'a'
+Token: (0, 16) -> Atomo: z
+Token: (0, 16) -> Atomo: z
+Token: (5, 2) -> Atomo: (
+Token: (1, 7) -> Atomo: i
+Token: (5, 3) -> Atomo: )
+Token: (5, 8) -> Atomo: ;
+Token: (0, 16) -> Atomo: z
+Token: (5, 2) -> Atomo: (
+Token: (4, 2) -> Atomo: s
+Token: (5, 3) -> Atomo: )
+Token: (5, 8) -> Atomo: ;
+Token: (0, 16) -> Atomo: z
 Token: (5, 2) -> Atomo: (
 Token: (5, 3) -> Atomo: )
-Token: (5, 6) -> Atomo: ,
-Token: (5, 7) -> Atomo: :
 Token: (5, 8) -> Atomo: ;
-Token: (1, 5) -> Atomo: id
-Token: (6, 0) -> Atomo: +
-Token: (6, 1) -> Atomo: -
-Token: (6, 2) -> Atomo: *
 Token: (6, 3) -> Atomo: /
-Token: (6, 4) -> Atomo: %
-Token: (6, 5) -> Atomo: \
-Token: (6, 6) -> Atomo: ^
-Token: (1, 6) -> Atomo: id
+Token: (6, 3) -> Atomo: /
+Error Lexico: Simbolo no reconocido 'l'
+Error Lexico: Simbolo no reconocido 'l'
+Error Lexico: Simbolo no reconocido 'a'
+Error Lexico: Simbolo no reconocido 'm'
+Error Lexico: Simbolo no reconocido 'a'
+Error Lexico: Simbolo no reconocido 'd'
+Error Lexico: Simbolo no reconocido 'a'
+Error Lexico: Simbolo no reconocido 'a'
+Error Lexico: Simbolo no reconocido 'u'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 'a'
+Error Lexico: Simbolo no reconocido 'f'
+Error Lexico: Simbolo no reconocido 'u'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 'c'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'Ã'
+Error Lexico: Simbolo no reconocido '³'
+Error Lexico: Simbolo no reconocido 'n'
+Token: (5, 0) -> Atomo: [
+Token: (1, 8) -> Atomo: i
+Token: (5, 2) -> Atomo: (
+Token: (1, 9) -> Atomo: i
+Token: (5, 6) -> Atomo: ,
+Token: (2, 9) -> Atomo: n
+Token: (5, 3) -> Atomo: )
+Token: (5, 1) -> Atomo: ]
+Token: (6, 3) -> Atomo: /
+Token: (6, 3) -> Atomo: /
+Error Lexico: Simbolo no reconocido 'f'
+Error Lexico: Simbolo no reconocido 'u'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 'c'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'o'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 's'
+Token: (0, 7) -> Atomo: #
+Token: (1, 8) -> Atomo: i
+Token: (5, 2) -> Atomo: (
+Token: (0, 9) -> Atomo: f
+Token: (1, 9) -> Atomo: i
+Token: (5, 6) -> Atomo: ,
+Token: (0, 7) -> Atomo: #
+Token: (1, 6) -> Atomo: i
+Token: (5, 3) -> Atomo: )
+Token: (5, 4) -> Atomo: {
 Token: (7, 0) -> Atomo: <
+Error Lexico: Simbolo no reconocido 's'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 't'
+Error Lexico: Simbolo no reconocido 'e'
+Error Lexico: Simbolo no reconocido 'n'
+Error Lexico: Simbolo no reconocido 'c'
+Error Lexico: Simbolo no reconocido 'i'
+Error Lexico: Simbolo no reconocido 'a'
+Error Lexico: Simbolo no reconocido 's'
 Token: (7, 1) -> Atomo: >
-Token: (7, 2) -> Atomo: l
-Token: (7, 3) -> Atomo: u
-Token: (7, 4) -> Atomo: e
-Token: (7, 5) -> Atomo: d
-Token: (1, 7) -> Atomo: id
-Token: (8, 0) -> Atomo: =
-Token: (8, 0) -> Atomo: =
+Token: (5, 5) -> Atomo: }
 
 === FASE 2: ANALISIS SINTACTICO ===
 
@@ -113,118 +497,234 @@ Token: (8, 0) -> Atomo: =
 --------------------------------------------------------------
 
 --- CADENA DE ATOMOS ---
-a b f t g w m # o f j h p c q y z id id id id id n n n n n n id n r r r n n id n s s s s s s s s s [ ] { } ( ) , : ; id + - * / % \ ^ id < > l u e d id = =
+/ / b i = n , i ; f i ; y i = s , i ; / / i = i + n * ( n - n ) ; i = s ; i = r ; / / r * n ( r + i ) / [ i ( n ) ] / / n l i i e s r > i / / w w ( i > n ) m { < > } / / f f ( < > ) < > t < > f ( < > ) < > / / j j ( i = n ; i < n ; i = i + n ) { < > } / / h h ( i ) { n : < > q n : < > o : < > } / / z z ( i ) ; z ( s ) ; z ( ) ; / / [ i ( i , n ) ] / / # i ( f i , # i ) { < > }
 
 --- TOKENS GENERADOS ---
-Token 1: Clase=0, Valor=0, Atomo=a
-Token 2: Clase=0, Valor=1, Atomo=b
+Token 1: Clase=6, Valor=0, Atomo=+
+Token 2: Clase=6, Valor=1, Atomo=-
 Token 3: Clase=0, Valor=2, Atomo=f
-Token 4: Clase=0, Valor=3, Atomo=t
-Token 5: Clase=0, Valor=4, Atomo=g
-Token 6: Clase=0, Valor=5, Atomo=w
-Token 7: Clase=0, Valor=6, Atomo=m
-Token 8: Clase=0, Valor=7, Atomo=#
-Token 9: Clase=0, Valor=8, Atomo=o
+Token 4: Clase=1, Valor=3, Atomo=i
+Token 5: Clase=8, Valor=4, Atomo=ERROR
+Token 6: Clase=2, Valor=5, Atomo=n
+Token 7: Clase=5, Valor=6, Atomo=,
+Token 8: Clase=1, Valor=7, Atomo=i
+Token 9: Clase=5, Valor=8, Atomo=;
 Token 10: Clase=0, Valor=9, Atomo=f
-Token 11: Clase=0, Valor=10, Atomo=j
-Token 12: Clase=0, Valor=11, Atomo=h
+Token 11: Clase=1, Valor=10, Atomo=i
+Token 12: Clase=5, Valor=11, Atomo=ERROR
 Token 13: Clase=0, Valor=12, Atomo=p
-Token 14: Clase=0, Valor=13, Atomo=c
-Token 15: Clase=0, Valor=14, Atomo=q
-Token 16: Clase=0, Valor=15, Atomo=y
-Token 17: Clase=0, Valor=16, Atomo=z
-Token 18: Clase=1, Valor=17, Atomo=id
-Token 19: Clase=1, Valor=18, Atomo=id
-Token 20: Clase=1, Valor=19, Atomo=id
-Token 21: Clase=1, Valor=20, Atomo=id
-Token 22: Clase=1, Valor=21, Atomo=id
-Token 23: Clase=2, Valor=22, Atomo=n
-Token 24: Clase=2, Valor=23, Atomo=n
-Token 25: Clase=2, Valor=24, Atomo=n
+Token 14: Clase=1, Valor=13, Atomo=i
+Token 15: Clase=8, Valor=14, Atomo=ERROR
+Token 16: Clase=4, Valor=15, Atomo=s
+Token 17: Clase=5, Valor=16, Atomo=ERROR
+Token 18: Clase=1, Valor=17, Atomo=i
+Token 19: Clase=5, Valor=18, Atomo=ERROR
+Token 20: Clase=6, Valor=19, Atomo=ERROR
+Token 21: Clase=6, Valor=20, Atomo=ERROR
+Token 22: Clase=1, Valor=21, Atomo=i
+Token 23: Clase=8, Valor=22, Atomo=ERROR
+Token 24: Clase=1, Valor=23, Atomo=i
+Token 25: Clase=6, Valor=24, Atomo=ERROR
 Token 26: Clase=2, Valor=25, Atomo=n
-Token 27: Clase=2, Valor=26, Atomo=n
-Token 28: Clase=2, Valor=27, Atomo=n
-Token 29: Clase=1, Valor=28, Atomo=id
-Token 30: Clase=2, Valor=29, Atomo=n
-Token 31: Clase=3, Valor=30, Atomo=r
-Token 32: Clase=3, Valor=31, Atomo=r
-Token 33: Clase=3, Valor=32, Atomo=r
-Token 34: Clase=2, Valor=33, Atomo=n
-Token 35: Clase=2, Valor=34, Atomo=n
-Token 36: Clase=1, Valor=35, Atomo=id
-Token 37: Clase=2, Valor=36, Atomo=n
-Token 38: Clase=4, Valor=37, Atomo=s
-Token 39: Clase=4, Valor=38, Atomo=s
-Token 40: Clase=4, Valor=39, Atomo=s
-Token 41: Clase=4, Valor=40, Atomo=s
-Token 42: Clase=4, Valor=41, Atomo=s
-Token 43: Clase=4, Valor=42, Atomo=s
-Token 44: Clase=4, Valor=43, Atomo=s
-Token 45: Clase=4, Valor=44, Atomo=s
-Token 46: Clase=4, Valor=45, Atomo=s
+Token 27: Clase=6, Valor=26, Atomo=ERROR
+Token 28: Clase=5, Valor=27, Atomo=ERROR
+Token 29: Clase=2, Valor=28, Atomo=n
+Token 30: Clase=6, Valor=29, Atomo=ERROR
+Token 31: Clase=2, Valor=30, Atomo=n
+Token 32: Clase=5, Valor=31, Atomo=ERROR
+Token 33: Clase=5, Valor=32, Atomo=ERROR
+Token 34: Clase=1, Valor=33, Atomo=i
+Token 35: Clase=8, Valor=34, Atomo=ERROR
+Token 36: Clase=4, Valor=35, Atomo=s
+Token 37: Clase=5, Valor=36, Atomo=ERROR
+Token 38: Clase=1, Valor=37, Atomo=i
+Token 39: Clase=8, Valor=38, Atomo=ERROR
+Token 40: Clase=3, Valor=39, Atomo=r
+Token 41: Clase=5, Valor=40, Atomo=ERROR
+Token 42: Clase=6, Valor=41, Atomo=ERROR
+Token 43: Clase=6, Valor=42, Atomo=ERROR
+Token 44: Clase=3, Valor=43, Atomo=r
+Token 45: Clase=6, Valor=44, Atomo=ERROR
+Token 46: Clase=2, Valor=45, Atomo=n
 Token 47: Clase=5, Valor=46, Atomo=ERROR
-Token 48: Clase=5, Valor=47, Atomo=ERROR
-Token 49: Clase=5, Valor=48, Atomo=ERROR
-Token 50: Clase=5, Valor=49, Atomo=ERROR
+Token 48: Clase=3, Valor=47, Atomo=r
+Token 49: Clase=6, Valor=48, Atomo=ERROR
+Token 50: Clase=1, Valor=49, Atomo=i
 Token 51: Clase=5, Valor=50, Atomo=ERROR
-Token 52: Clase=5, Valor=51, Atomo=ERROR
+Token 52: Clase=6, Valor=51, Atomo=ERROR
 Token 53: Clase=5, Valor=52, Atomo=ERROR
-Token 54: Clase=5, Valor=53, Atomo=ERROR
+Token 54: Clase=1, Valor=53, Atomo=i
 Token 55: Clase=5, Valor=54, Atomo=ERROR
-Token 56: Clase=1, Valor=55, Atomo=id
-Token 57: Clase=6, Valor=56, Atomo=ERROR
-Token 58: Clase=6, Valor=57, Atomo=ERROR
+Token 56: Clase=2, Valor=55, Atomo=n
+Token 57: Clase=5, Valor=56, Atomo=ERROR
+Token 58: Clase=5, Valor=57, Atomo=ERROR
 Token 59: Clase=6, Valor=58, Atomo=ERROR
 Token 60: Clase=6, Valor=59, Atomo=ERROR
-Token 61: Clase=6, Valor=60, Atomo=ERROR
-Token 62: Clase=6, Valor=61, Atomo=ERROR
-Token 63: Clase=6, Valor=62, Atomo=ERROR
-Token 64: Clase=1, Valor=63, Atomo=id
+Token 61: Clase=2, Valor=60, Atomo=n
+Token 62: Clase=7, Valor=61, Atomo=ERROR
+Token 63: Clase=1, Valor=62, Atomo=i
+Token 64: Clase=1, Valor=63, Atomo=i
 Token 65: Clase=7, Valor=64, Atomo=ERROR
-Token 66: Clase=7, Valor=65, Atomo=ERROR
-Token 67: Clase=7, Valor=66, Atomo=ERROR
+Token 66: Clase=4, Valor=65, Atomo=s
+Token 67: Clase=3, Valor=66, Atomo=r
 Token 68: Clase=7, Valor=67, Atomo=ERROR
-Token 69: Clase=7, Valor=68, Atomo=ERROR
-Token 70: Clase=7, Valor=69, Atomo=ERROR
-Token 71: Clase=1, Valor=70, Atomo=id
-Token 72: Clase=8, Valor=71, Atomo=ERROR
-Token 73: Clase=8, Valor=72, Atomo=ERROR
+Token 69: Clase=1, Valor=68, Atomo=i
+Token 70: Clase=6, Valor=69, Atomo=ERROR
+Token 71: Clase=6, Valor=70, Atomo=ERROR
+Token 72: Clase=0, Valor=71, Atomo=ERROR
+Token 73: Clase=0, Valor=72, Atomo=ERROR
+Token 74: Clase=5, Valor=73, Atomo=ERROR
+Token 75: Clase=1, Valor=74, Atomo=i
+Token 76: Clase=7, Valor=75, Atomo=ERROR
+Token 77: Clase=2, Valor=76, Atomo=n
+Token 78: Clase=5, Valor=77, Atomo=ERROR
+Token 79: Clase=0, Valor=78, Atomo=ERROR
+Token 80: Clase=5, Valor=79, Atomo=ERROR
+Token 81: Clase=7, Valor=80, Atomo=ERROR
+Token 82: Clase=7, Valor=81, Atomo=ERROR
+Token 83: Clase=5, Valor=82, Atomo=ERROR
+Token 84: Clase=6, Valor=83, Atomo=ERROR
+Token 85: Clase=6, Valor=84, Atomo=ERROR
+Token 86: Clase=0, Valor=85, Atomo=ERROR
+Token 87: Clase=0, Valor=86, Atomo=ERROR
+Token 88: Clase=5, Valor=87, Atomo=ERROR
+Token 89: Clase=7, Valor=88, Atomo=ERROR
+Token 90: Clase=7, Valor=89, Atomo=ERROR
+Token 91: Clase=5, Valor=90, Atomo=ERROR
+Token 92: Clase=7, Valor=91, Atomo=ERROR
+Token 93: Clase=7, Valor=92, Atomo=ERROR
+Token 94: Clase=0, Valor=93, Atomo=ERROR
+Token 95: Clase=7, Valor=94, Atomo=ERROR
+Token 96: Clase=7, Valor=95, Atomo=ERROR
+Token 97: Clase=0, Valor=96, Atomo=ERROR
+Token 98: Clase=5, Valor=97, Atomo=ERROR
+Token 99: Clase=7, Valor=98, Atomo=ERROR
+Token 100: Clase=7, Valor=99, Atomo=ERROR
+Token 101: Clase=5, Valor=100, Atomo=ERROR
+Token 102: Clase=7, Valor=101, Atomo=ERROR
+Token 103: Clase=7, Valor=102, Atomo=ERROR
+Token 104: Clase=6, Valor=103, Atomo=ERROR
+Token 105: Clase=6, Valor=104, Atomo=ERROR
+Token 106: Clase=0, Valor=105, Atomo=ERROR
+Token 107: Clase=0, Valor=106, Atomo=ERROR
+Token 108: Clase=5, Valor=107, Atomo=ERROR
+Token 109: Clase=1, Valor=108, Atomo=i
+Token 110: Clase=8, Valor=109, Atomo=ERROR
+Token 111: Clase=2, Valor=110, Atomo=n
+Token 112: Clase=5, Valor=111, Atomo=ERROR
+Token 113: Clase=1, Valor=112, Atomo=i
+Token 114: Clase=7, Valor=113, Atomo=ERROR
+Token 115: Clase=2, Valor=114, Atomo=n
+Token 116: Clase=5, Valor=115, Atomo=ERROR
+Token 117: Clase=1, Valor=116, Atomo=i
+Token 118: Clase=8, Valor=117, Atomo=ERROR
+Token 119: Clase=1, Valor=118, Atomo=i
+Token 120: Clase=6, Valor=119, Atomo=ERROR
+Token 121: Clase=2, Valor=120, Atomo=n
+Token 122: Clase=5, Valor=121, Atomo=ERROR
+Token 123: Clase=5, Valor=122, Atomo=ERROR
+Token 124: Clase=7, Valor=123, Atomo=ERROR
+Token 125: Clase=7, Valor=124, Atomo=ERROR
+Token 126: Clase=5, Valor=125, Atomo=ERROR
+Token 127: Clase=6, Valor=126, Atomo=ERROR
+Token 128: Clase=6, Valor=127, Atomo=ERROR
+Token 129: Clase=0, Valor=128, Atomo=ERROR
+Token 130: Clase=0, Valor=129, Atomo=ERROR
+Token 131: Clase=5, Valor=130, Atomo=ERROR
+Token 132: Clase=1, Valor=131, Atomo=i
+Token 133: Clase=5, Valor=132, Atomo=ERROR
+Token 134: Clase=5, Valor=133, Atomo=ERROR
+Token 135: Clase=2, Valor=134, Atomo=n
+Token 136: Clase=5, Valor=135, Atomo=ERROR
+Token 137: Clase=7, Valor=136, Atomo=ERROR
+Token 138: Clase=7, Valor=137, Atomo=ERROR
+Token 139: Clase=0, Valor=138, Atomo=ERROR
+Token 140: Clase=2, Valor=139, Atomo=n
+Token 141: Clase=5, Valor=140, Atomo=ERROR
+Token 142: Clase=7, Valor=141, Atomo=ERROR
+Token 143: Clase=7, Valor=142, Atomo=ERROR
+Token 144: Clase=0, Valor=143, Atomo=ERROR
+Token 145: Clase=5, Valor=144, Atomo=ERROR
+Token 146: Clase=7, Valor=145, Atomo=ERROR
+Token 147: Clase=7, Valor=146, Atomo=ERROR
+Token 148: Clase=5, Valor=147, Atomo=ERROR
+Token 149: Clase=6, Valor=148, Atomo=ERROR
+Token 150: Clase=6, Valor=149, Atomo=ERROR
+Token 151: Clase=0, Valor=150, Atomo=ERROR
+Token 152: Clase=0, Valor=151, Atomo=ERROR
+Token 153: Clase=5, Valor=152, Atomo=ERROR
+Token 154: Clase=1, Valor=153, Atomo=i
+Token 155: Clase=5, Valor=154, Atomo=ERROR
+Token 156: Clase=5, Valor=155, Atomo=ERROR
+Token 157: Clase=0, Valor=156, Atomo=ERROR
+Token 158: Clase=5, Valor=157, Atomo=ERROR
+Token 159: Clase=4, Valor=158, Atomo=s
+Token 160: Clase=5, Valor=159, Atomo=ERROR
+Token 161: Clase=5, Valor=160, Atomo=ERROR
+Token 162: Clase=0, Valor=161, Atomo=ERROR
+Token 163: Clase=5, Valor=162, Atomo=ERROR
+Token 164: Clase=5, Valor=163, Atomo=ERROR
+Token 165: Clase=5, Valor=164, Atomo=ERROR
+Token 166: Clase=6, Valor=165, Atomo=ERROR
+Token 167: Clase=6, Valor=166, Atomo=ERROR
+Token 168: Clase=5, Valor=167, Atomo=ERROR
+Token 169: Clase=1, Valor=168, Atomo=i
+Token 170: Clase=5, Valor=169, Atomo=ERROR
+Token 171: Clase=1, Valor=170, Atomo=i
+Token 172: Clase=5, Valor=171, Atomo=ERROR
+Token 173: Clase=2, Valor=172, Atomo=n
+Token 174: Clase=5, Valor=173, Atomo=ERROR
+Token 175: Clase=5, Valor=174, Atomo=ERROR
+Token 176: Clase=6, Valor=175, Atomo=ERROR
+Token 177: Clase=6, Valor=176, Atomo=ERROR
+Token 178: Clase=0, Valor=177, Atomo=ERROR
+Token 179: Clase=1, Valor=178, Atomo=i
+Token 180: Clase=5, Valor=179, Atomo=ERROR
+Token 181: Clase=0, Valor=180, Atomo=ERROR
+Token 182: Clase=1, Valor=181, Atomo=i
+Token 183: Clase=5, Valor=182, Atomo=ERROR
+Token 184: Clase=0, Valor=183, Atomo=ERROR
+Token 185: Clase=1, Valor=184, Atomo=i
+Token 186: Clase=5, Valor=185, Atomo=ERROR
+Token 187: Clase=5, Valor=186, Atomo=ERROR
+Token 188: Clase=7, Valor=187, Atomo=ERROR
+Token 189: Clase=7, Valor=188, Atomo=ERROR
+Token 190: Clase=5, Valor=189, Atomo=ERROR
 
 --- TABLA DE SIMBOLOS ---
-Pos: 0, Dato: $clase_uno, Tipo: -1
-Pos: 1, Dato: $identificadores, Tipo: -1
-Pos: 2, Dato: $Alonso, Tipo: -1
-Pos: 3, Dato: $Grupo_Compiladores, Tipo: -1
-Pos: 4, Dato: $clase_, Tipo: -1
-Pos: 5, Dato: $operadores_aritmeticos, Tipo: -1
-Pos: 6, Dato: $operadores_relacionales, Tipo: -1
-Pos: 7, Dato: $operador_de_asignacion, Tipo: -1
+Pos: 0, Dato: $Grande, Tipo: -1
+Pos: 1, Dato: $num, Tipo: -1
+Pos: 2, Dato: $numReal, Tipo: -1
+Pos: 3, Dato: $cad, Tipo: -1
+Pos: 4, Dato: $cadVacia, Tipo: -1
+Pos: 5, Dato: $calcula, Tipo: -1
+Pos: 6, Dato: $n, Tipo: -1
+Pos: 7, Dato: $valor, Tipo: -1
+Pos: 8, Dato: $fun, Tipo: -1
+Pos: 9, Dato: $x, Tipo: -1
 
 --- TABLA DE LITERALES NUMERICAS (Enteros/Octales) ---
 Pos: 0, Dato: 2, Tipo: -1
-Pos: 1, Dato: o1234567, Tipo: -1
-Pos: 2, Dato: O2136, Tipo: -1
-Pos: 3, Dato: 3432, Tipo: -1
-Pos: 4, Dato: 0, Tipo: -1
-Pos: 5, Dato: 432442, Tipo: -1
-Pos: 6, Dato: 3, Tipo: -1
-Pos: 7, Dato: 12, Tipo: -1
-Pos: 8, Dato: 4, Tipo: -1
+Pos: 1, Dato: 15, Tipo: -1
+Pos: 2, Dato: o12, Tipo: -1
+Pos: 3, Dato: 93, Tipo: -1
+Pos: 4, Dato: 25, Tipo: -1
+Pos: 5, Dato: 63, Tipo: -1
+Pos: 6, Dato: 6, Tipo: -1
+Pos: 7, Dato: 10, Tipo: -1
+Pos: 8, Dato: 1, Tipo: -1
+Pos: 9, Dato: 8, Tipo: -1
 
 --- TABLA DE LITERALES REALES (Decimales) ---
-Pos: 0, Dato: 73.0, Tipo: -1
-Pos: 1, Dato: .0, Tipo: -1
-Pos: 2, Dato: 10.2, Tipo: -1
+Pos: 0, Dato: 27.9, Tipo: -1
+Pos: 1, Dato: 34.7, Tipo: -1
+Pos: 2, Dato: 12.6, Tipo: -1
+Pos: 3, Dato: 40.8, Tipo: -1
 
 --- TABLA DE LITERALES CADENAS ---
-Pos: 0, Dato: Hola mundo, Tipo: -1
-Pos: 1, Dato: a, Tipo: -1
-Pos: 2, Dato: b, Tipo: -1
-Pos: 3, Dato: ', Tipo: -1
-Pos: 4, Dato: ", Tipo: -1
-Pos: 5, Dato: ejemplos no , Tipo: -1
-Pos: 6, Dato: 
-, Tipo: -1
+Pos: 0, Dato: cadena#1, Tipo: -1
+Pos: 1, Dato: cadena#2, Tipo: -1
+Pos: 2, Dato: cadena1, Tipo: -1
 
 ---------------------------------------------------------------
 |  PROGRAMA SINTACTICAMENTE CORRECTO  |

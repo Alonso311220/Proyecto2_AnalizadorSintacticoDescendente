@@ -115,7 +115,7 @@
        fflush(apSal);
    }
    
-   void imprimirTokens(ListaC *inicio, FILE *output_file){
+void imprimirTokens(ListaC *inicio, FILE *output_file){
     if(inicio == NULL){
         printf("La lista está vacía.\n");
         if (output_file) fprintf(output_file, "La lista está vacía.\n");
@@ -146,7 +146,7 @@
     } while (corredor != inicio);
 }
 
-   void InsertarToken(int clase, int valor){
+void InsertarToken(int clase, int valor){
        int pos_actual = pos_token;
        InsertarFinal(&ListaT_inicio, pos_actual, NULL, clase);
        pos_token++;
@@ -154,7 +154,7 @@
 
    // ==================== FUNCIONES DE BÚSQUEDA/INSERCIÓN ====================
    
-   int buscar_o_insertar_identificador(char *ident){
+int buscar_o_insertar_identificador(char *ident){
        ListaC *nodo_encontrado = BuscarNodoPorDato(TS_inicio, ident);
        
        if(nodo_encontrado != NULL){
@@ -168,7 +168,7 @@
        return posicion_actual;
    }
 
-   int buscar_o_insertar_literal_num(char *numero) {
+int buscar_o_insertar_literal_num(char *numero) {
        ListaC *nodo_encontrado = BuscarNodoPorDato(TLN_inicio, numero);
        
        if(nodo_encontrado != NULL){
@@ -183,7 +183,7 @@
    }
 
    // NUEVA: Función separada para literales reales
-   int buscar_o_insertar_literal_real(char *numero) {
+int buscar_o_insertar_literal_real(char *numero) {
        ListaC *nodo_encontrado = BuscarNodoPorDato(TLR_inicio, numero);
        
        if(nodo_encontrado != NULL){
@@ -210,6 +210,335 @@
        
        return posicion_actual;
    }
+
+#define MAX_PILA 100
+typedef struct{
+    char elementos[MAX_PILA][20];
+    int tope;
+} Pila;
+
+void inicializar_pila(Pila *p){
+    p->tope = -1;
+}
+void push(Pila *p, const char *simbolo){
+    if(p->tope < MAX_PILA - 1){
+        strcpy(p->elementos[++p->tope], simbolo);
+    }
+}
+char* pop(Pila *p){
+    if(p->tope >= 0){
+        return p->elementos[p->tope--];
+    }
+    return NULL;
+}
+char* tope_pila(Pila* p){
+    if(p->tope >= 0){
+        return p->elementos[p->tope];
+    }
+    return NULL;
+}
+int pila_vacia(Pila *p){
+    return p->tope == -1; //se encuentra inicializada nadamás (regresa un true o un false)
+}
+
+char **tokens_array;
+int indice_token = 0;
+int total_tokens = 0;
+int errores_sintacticos = 0;
+
+//ver reglas 
+
+
+typedef struct {
+    char no_terminal[10];
+    char terminal[10];
+    int produccion;
+} EntradaTabla;
+
+EntradaTabla tabla_parser[] = {
+    // No-Terminal, Terminal, Número de Producción
+    {"E",  "n",  1},  {"E",  "(",  1},
+    {"E'", "+",  2},  {"E'", ")",  3},  {"E'", "$", 3},
+    {"T",  "n",  4},  {"T",  "(",  4},
+    {"T'", "+",  6},  {"T'", "*",  5},  {"T'", ")", 6},  {"T'", "$", 6},
+    {"F",  "n",  7},  {"F",  "(",  8},
+    {"",   "",  -1}   // Terminador
+};
+
+int consultar_tabla(const char *no_terminal, const char *terminal) {
+    for (int i = 0; tabla_parser[i].produccion != -1; i++) {
+        if (strcmp(tabla_parser[i].no_terminal, no_terminal) == 0 &&
+            strcmp(tabla_parser[i].terminal, terminal) == 0) {
+            return tabla_parser[i].produccion;
+        }
+    }
+    return 0;  // Error: celda vacía
+}
+
+// Obtener producción como string
+const char* obtener_produccion(int num_prod) {
+    switch(num_prod) {
+        case 1: return "E → T E'";
+        case 2: return "E' → + T E'";
+        case 3: return "E' → ε";
+        case 4: return "T → F T'";
+        case 5: return "T' → * F T'";
+        case 6: return "T' → ε";
+        case 7: return "F → n";
+        case 8: return "F → ( E )";
+        default: return "ERROR";
+    }
+}
+
+// ==================== ANALIZADOR PREDICTIVO ====================
+
+void aplicar_produccion(Pila *pila, int num_prod) {
+    printf("  Aplicando: %s\n", obtener_produccion(num_prod));
+    
+    switch(num_prod) {
+        case 1: // E → T E'
+            push(pila, "E'");
+            push(pila, "T");
+            break;
+        case 2: // E' → + T E'
+            push(pila, "E'");
+            push(pila, "T");
+            push(pila, "+");
+            break;
+        case 3: // E' → ε (no hace nada)
+            break;
+        case 4: // T → F T'
+            push(pila, "T'");
+            push(pila, "F");
+            break;
+        case 5: // T' → * F T'
+            push(pila, "T'");
+            push(pila, "F");
+            push(pila, "*");
+            break;
+        case 6: // T' → ε (no hace nada)
+            break;
+        case 7: // F → n
+            push(pila, "n");
+            break;
+        case 8: // F → ( E )
+            push(pila, ")");
+            push(pila, "E");
+            push(pila, "(");
+            break;
+    }
+}
+
+int es_no_terminal(const char *simbolo) {
+    return (strcmp(simbolo, "E") == 0 || strcmp(simbolo, "E'") == 0 ||
+            strcmp(simbolo, "T") == 0 || strcmp(simbolo, "T'") == 0 ||
+            strcmp(simbolo, "F") == 0);
+}
+
+int analisis_predictivo(const char *cadena_atomos) {
+    printf("\n=== ANALIZADOR PREDICTIVO ===\n");
+    printf("Entrada: %s\n\n", cadena_atomos);
+    
+    // Tokenizar la cadena
+    char *copia = strdup(cadena_atomos);
+    char *token = strtok(copia, " ");
+    int capacidad = 50;
+    tokens_array = malloc(capacidad * sizeof(char*));
+    total_tokens = 0;
+    
+    while (token != NULL) {
+        tokens_array[total_tokens] = strdup(token);
+        total_tokens++;
+        token = strtok(NULL, " ");
+    }
+    tokens_array[total_tokens] = strdup("$");  // Fin de entrada
+    total_tokens++;
+    free(copia);
+    
+    // Inicializar pila
+    Pila pila;
+    inicializar_pila(&pila);
+    push(&pila, "$");
+    push(&pila, "E");  // Símbolo inicial
+    
+    indice_token = 0;
+    int paso = 1;
+    
+    while (!pila_vacia(&pila)) {
+        char *X = tope_pila(&pila);
+        char *a = tokens_array[indice_token];
+        
+        printf("Paso %d:\n", paso++);
+        printf("  Pila: %s | Entrada: %s\n", X, a);
+        
+        // Caso 1: Fin exitoso
+        if (strcmp(X, "$") == 0 && strcmp(a, "$") == 0) {
+            printf("  ✓ ACEPTADO\n\n");
+            pop(&pila);
+            break;
+        }
+        
+        // Caso 2: Terminal coincide
+        if (!es_no_terminal(X)) {
+            if (strcmp(X, a) == 0) {
+                printf("  Match: %s\n", X);
+                pop(&pila);
+                indice_token++;
+            } else {
+                printf("  ✗ ERROR: Se esperaba '%s' pero se encontró '%s'\n", X, a);
+                errores_sintacticos++;
+                return 0;
+            }
+        }
+        // Caso 3: No-terminal (consultar tabla)
+        else {
+            int produccion = consultar_tabla(X, a);
+            if (produccion > 0) {
+                pop(&pila);
+                aplicar_produccion(&pila, produccion);
+            } else {
+                printf("  ✗ ERROR SINTÁCTICO: No hay producción para [%s, %s]\n", X, a);
+                errores_sintacticos++;
+                return 0;
+            }
+        }
+        printf("\n");
+    }
+    
+    // Limpiar memoria
+    for (int i = 0; i < total_tokens; i++) {
+        free(tokens_array[i]);
+    }
+    free(tokens_array);
+    
+    return (errores_sintacticos == 0);
+}
+
+// ==================== ANALIZADOR RECURSIVO DESCENDENTE ====================
+
+// Variables globales para recursivo
+char *token_actual;
+
+void avanzar() {
+    if (indice_token < total_tokens - 1) {
+        indice_token++;
+        token_actual = tokens_array[indice_token];
+    }
+}
+
+int match(const char *esperado) {
+    printf("  Match esperado: '%s' | actual: '%s'\n", esperado, token_actual);
+    if (strcmp(token_actual, esperado) == 0) {
+        avanzar();
+        return 1;
+    }
+    printf("  ✗ ERROR: Se esperaba '%s' pero se encontró '%s'\n", esperado, token_actual);
+    errores_sintacticos++;
+    return 0;
+}
+
+// Declaraciones adelantadas
+void parseE();
+void parseEP();
+void parseT();
+void parseTP();
+void parseF();
+
+// E → T E'
+void parseE() {
+    printf("Entrando a E\n");
+    parseT();
+    parseEP();
+}
+
+// E' → + T E' | ε
+void parseEP() {
+    printf("Entrando a E'\n");
+    if (strcmp(token_actual, "+") == 0) {
+        match("+");
+        parseT();
+        parseEP();
+    }
+    // ε: no hace nada
+}
+
+// T → F T'
+void parseT() {
+    printf("Entrando a T\n");
+    parseF();
+    parseTP();
+}
+
+// T' → * F T' | ε
+void parseTP() {
+    printf("Entrando a T'\n");
+    if (strcmp(token_actual, "*") == 0) {
+        match("*");
+        parseF();
+        parseTP();
+    }
+    // ε: no hace nada
+}
+
+// F → ( E ) | n
+void parseF() {
+    printf("Entrando a F\n");
+    if (strcmp(token_actual, "(") == 0) {
+        match("(");
+        parseE();
+        match(")");
+    } else if (strcmp(token_actual, "n") == 0) {
+        match("n");
+    } else {
+        printf("✗ ERROR: Se esperaba '(' o 'n'\n");
+        errores_sintacticos++;
+    }
+}
+
+int analisis_recursivo(const char *cadena_atomos) {
+    printf("\n=== ANALIZADOR RECURSIVO DESCENDENTE ===\n");
+    printf("Entrada: %s\n\n", cadena_atomos);
+    
+    // Tokenizar
+    char *copia = strdup(cadena_atomos);
+    char *token = strtok(copia, " ");
+    int capacidad = 50;
+    tokens_array = malloc(capacidad * sizeof(char*));
+    total_tokens = 0;
+    
+    while (token != NULL) {
+        tokens_array[total_tokens] = strdup(token);
+        total_tokens++;
+        token = strtok(NULL, " ");
+    }
+    tokens_array[total_tokens] = strdup("$");
+    total_tokens++;
+    free(copia);
+    
+    // Inicializar
+    indice_token = 0;
+    token_actual = tokens_array[0];
+    errores_sintacticos = 0;
+    
+    // Iniciar análisis desde el símbolo inicial
+    parseE();
+    
+    // Verificar que se consumió toda la entrada
+    if (strcmp(token_actual, "$") == 0 && errores_sintacticos == 0) {
+        printf("\n✓ ANÁLISIS EXITOSO\n");
+    } else {
+        printf("\n✗ ANÁLISIS CON ERRORES\n");
+    }
+    
+    // Limpiar
+    for (int i = 0; i < total_tokens; i++) {
+        free(tokens_array[i]);
+    }
+    free(tokens_array);
+    
+    return (errores_sintacticos == 0);
+}
+
 
 %}
 
@@ -381,6 +710,33 @@ int main(int argc, char *argv[]){
     liberarLista(&ListaT_inicio);
     liberarLista(&TLC_inicio);
 
+    //Analizador Semántico Y Sintáctico
+    const char *ejemplos[] = {
+        "n + n * n",      // Correcto
+        "( n + n ) * n",  // Correcto
+        "n + * n",        // Error
+        NULL
+    };
+    
+    for (int i = 0; ejemplos[i] != NULL; i++) {
+        printf("\n");
+        printf("═══════════════════════════════════════════════════════\n");
+        printf("EJEMPLO %d: %s\n", i+1, ejemplos[i]);
+        printf("═══════════════════════════════════════════════════════\n");
+        
+        // Probar analizador predictivo
+        int resultado1 = analisis_predictivo(ejemplos[i]);
+        
+        printf("\n");
+        
+        // Probar analizador recursivo
+        int resultado2 = analisis_recursivo(ejemplos[i]);
+        
+        printf("\nResultados: Predictivo=%s | Recursivo=%s\n", 
+               resultado1 ? "✓" : "✗",
+               resultado2 ? "✓" : "✗");
+    }
+    
     return 0;
 }
 
